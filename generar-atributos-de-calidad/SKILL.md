@@ -1,12 +1,21 @@
 ---
-name: generar-atributos-de-calidad
-description: "Genera y estructura escenarios de atributos de calidad de software (eficiencia, funcionalidad, mantenibilidad, portabilidad, fiabilidad, usabilidad) siguiendo el formato SEI. Usala cuando el usuario pida crear, definir o revisar un escenario de calidad, atributo de calidad, o requerimiento no funcional."
+name: atributos-de-calidad-y-arbol-de-utilidad
+description: "Genera escenarios de atributos de calidad con el template SEI de seis partes, verifica su completitud, propone cómo completar los campos faltantes y construye árboles de utilidad con refinamientos y prioridades de valor de negocio. Se centra en los 10 atributos tratados en el libro "software-architecture-in-practice-4": Availability, Deployability, Energy Efficiency, Integrability, Modifiability, Performance, Safety, Security, Testability y Usability. Usar esta skill siempre que el usuario mencione atributos de calidad, requisitos no funcionales , escenarios de Disponibilidad, Desplegabilidad, Eficiencia energética, Integrabilidad, Modificabilidad, Rendimiento, Seguridad, Testabilidad, Usabilidad., árbol de utilidad, o pida revisar/completar/priorizar requisitos de calidad de un sistema — incluso si no usa literalmente estos términos"
 ---
+
+--Especificacion de la generacion de atributos de calidad de acuerdo con los templates de 6 partes del SEI--
+
+@Pasos a seguir para la generacion:
+1. Evalua el requerimiento del usuario.
+2. Si el usuario no dio contexto del sistema para determinar los elementos, solicitar la informacion faltante.
+3. Compara e identifica el/los tipo/s de atributo/s de calidad segun las descripciones provistas en la seccion @Recursos-de-referencia.
+4. Redacta el escenario completando las 6 partes del template de @Atributo_de_calidad.
+5. Verifica el resultado contra cada uno de los ejemplos del atributo de calidad resultante presentes en @Recursos-de-referencia.
 
 
 @Atributo_de_calidad
 
-usar estandar:
+Usar plantilla:
 
 Fuente de estimulo:
 Estimulo:
@@ -16,42 +25,31 @@ Respuesta:
 Medida de la respuesta:
 Tipo escenario:
 
+Explicacion de las partes de la plantilla:
+>Fuente de estimulo - usuario/persona/sistema que inicia la escena
+>Estimulo - input del usuario/persona/sistema que se introduce
+>Ambiente - estado actual/contexto del Artefacto
+>Artefacto - sistema hardware/software que se esta analizando
+>Respuesta - accion que se debe llevar a cabo
+>Medidia de la respuesta: tiempo/porcentaje/cantidad/valor que debe tomar la respuesta
+>Tipo escenario - tipo del escenario que se trabaja puede ser Eficiencia/Funcionalidad/Mantenibilidad/Portabilidad/Fiabilidad/Usabilidad
+
+--Fin de la especificacion de la generacion de atributos de calidad--
+
+--Chequear completitud de un escenario--
+
+@Pasos a seguir para el chequeo:
+1. Lee 
 
 
-explicacion:
+@Recursos-de-referencia
 
+Para determinar el tipo de atributo de calidad del escenario, usar siempre que se tenga que determinar 'Tipo escenario': [tipo escenario](./descripcion-atributos-de-calidad.md)
 
-Fuente de estimulo - usuario/persona/sistema que inicia la escena
-Estimulo - input del usuario/persona/sistema que se introduce
-Ambiente - estado actual/contexto del Artefacto
-Artefacto - sistema hardware/software que se esta analizando
-Respuesta - accion que se debe llevar a cabo
-Medidia de la respuesta: tiempo/porcentaje/cantidad/valor que debe tomar la respuesta
-Tipo escenario - tipo del escenario que se trabaja puede ser Eficiencia/Funcionalidad/Mantenibilidad/Portabilidad/Fiabilidad/Usabilidad
-
-@consideraciones
-
-Si considera que no hay suficiente informacion para determinar los elementos (Fuente de estimulo/Estimulo/Ambiente/Artefacto/Respuesta/Medida de respuesta) pregunte al ususario por mas contexto.
-Si usuario no provee mas contexto, asumir partes faltantes.
-Cuando recibe atributos de calidad chequear si esta completo, si no lo esta, completarlo.
-Usar Recursos siempre que se tenga que determinar 'Tipo escenario'.
-Una ves determinado el 'Tipo escenario' leer TODOS los ejemplos de ese tipo.
-
-
-@Recursos
-
-Para determinar el tipo del escenario, usar siempre que se tenga que determinar 'Tipo escenario': [tipo escenario](descripcion-atributos-de-calidad.md)
-
-
-Ejemplos Eficiencia: [ejemplo eficiencia](./ejemplo-eficiencia/eficiencia1.md)[ejemplo eficiencia](./ejemplo-eficiencia/eficiencia2.md)
-Ejemplos Funcionalidad: [ejemplo funcionalidad](./ejemplo-funcionalidad/funcionalidad1.md)[ejemplo funcionalidad](./ejemplo-funcionalidad/funcionalidad2.md)
-Ejemplos Mantenibilidad: [ejemplo mantenibilidad](./ejemplo-mantenibilidad/mantenibilidad1.md)[ejemplo mantenibilidad](./ejemplo-mantenibilidad/mantenibilidad2.md)
-Ejemplos Portabilidad: [ejemplo portabilidad](./ejemplo-portabilidad/portabilidad1.md) [ejemplo portabilidad](./ejemplo-portabilidad/portabilidad2.md) 
-Ejemplos Fiabilidad: [ejemplo fiabilidad](./ejemplo-fiabilidad/fiabilidad1.md) [ejemplo fiabilidad](./ejemplo-fiabilidad/fiabilidad2.md)
-Ejemplos Usabilidad: [ejemplo usabilidad](./ejemplo-usabilidad/usabilidad1.md) [ejemplo usabilidad](./ejemplo-usabilidad/usabilidad2.md)
-
-
-
-
-
+Ejemplos Eficiencia: [ejemplo eficiencia](./ejemplo-eficiencia/)
+Ejemplos Funcionalidad: [ejemplo funcionalidad](./ejemplo-funcionalidad/)
+Ejemplos Mantenibilidad: [ejemplo mantenibilidad](./ejemplo-mantenibilidad/)
+Ejemplos Portabilidad: [ejemplo portabilidad](./ejemplo-portabilidad/) 
+Ejemplos Fiabilidad: [ejemplo fiabilidad](./ejemplo-fiabilidad/)
+Ejemplos Usabilidad: [ejemplo usabilidad](./ejemplo-usabilidad/)
 
