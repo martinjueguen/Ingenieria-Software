@@ -5,15 +5,15 @@ description: "Genera escenarios de atributos de calidad con el template SEI de s
 
 --Especificacion de la generacion de atributos de calidad de acuerdo con los templates de 6 partes del SEI--
 
-@Pasos a seguir para la generacion:
+#Pasos a seguir para la generacion:
 1. Evalua el requerimiento del usuario.
 2. Si el usuario no dio contexto del sistema para determinar los elementos, solicitar la informacion faltante.
-3. Compara e identifica el/los tipo/s de atributo/s de calidad segun las descripciones provistas en la seccion @Recursos-de-referencia.
-4. Redacta el escenario completando las 6 partes del template de @Atributo_de_calidad.
-5. Verifica el resultado contra cada uno de los ejemplos del atributo de calidad resultante presentes en @Recursos-de-referencia.
+3. Compara e identifica el/los tipo/s de atributo/s de calidad segun las descripciones provistas en la seccion [Recursos de referencia](#Recursos-de-referencia).
+4. Redacta el escenario completando las 6 partes del template de [Template](#Atributo_de_calidad).
+5. Verifica el resultado contra cada uno de los ejemplos del atributo de calidad resultante presentes en [Recursos de referencia](#Recursos-de-referencia).
 
 
-@Atributo_de_calidad
+#Atributo_de_calidad
 
 Usar plantilla:
 
@@ -23,7 +23,6 @@ Ambiente:
 Artefacto:
 Respuesta:
 Medida de la respuesta:
-Tipo escenario:
 
 Explicacion de las partes de la plantilla:
 >Fuente de estimulo - usuario/persona/sistema que inicia la escena
@@ -32,17 +31,56 @@ Explicacion de las partes de la plantilla:
 >Artefacto - sistema hardware/software que se esta analizando
 >Respuesta - accion que se debe llevar a cabo
 >Medidia de la respuesta: tiempo/porcentaje/cantidad/valor que debe tomar la respuesta
->Tipo escenario - tipo del escenario que se trabaja puede ser Eficiencia/Funcionalidad/Mantenibilidad/Portabilidad/Fiabilidad/Usabilidad
 
 --Fin de la especificacion de la generacion de atributos de calidad--
 
---Chequear completitud de un escenario--
-
-@Pasos a seguir para el chequeo:
-1. Lee 
 
 
-@Recursos-de-referencia
+--Chequeo de completitud de un escenario--
+
+#Pasos para chequeo de escenarios
+1. Identificar el atributo de calidad consultando la seccion [Recursos de referencia](#Recursos-de-referencia)
+2. Separar el escenario en las seis partes (Fuente de estimulo, Estimulo, Ambiente, Artefacto, Respuesta, Medida de la respuesta)
+3. Intentar mapear explícitamente cada fragmento del escenario a una de las siguientes partes, para guiarte pordes pensar en las siguientes preguntas:
+    Fuente de estimulo	¿Quién o qué origina el estímulo?
+    Estímulo	¿Qué evento, cambio, fallo, ataque, solicitud o acción ocurre?
+    Ambiente	¿En qué estado, modo, etapa o condición se encuentra el sistema cuando ocurre?
+    Artefacto	¿Qué sistema, componente, módulo, dato, servicio o parte del sistema es afectada?
+    Respuesta	¿Qué debe hacer el sistema como consecuencia del estímulo?
+    Medida de respuesta	¿Cómo se determina objetivamente si la respuesta es aceptable?
+    Paso 3 — Determinar si cada parte está presente
+4. Para cada una de las seis partes asignar uno de estos estados:
+    Completa: la información está presente y es suficientemente específica para el escenario.
+    Parcial: existe alguna información, pero es demasiado vaga o no permite analizar adecuadamente el requisito.
+    Faltante: la parte no aparece o no puede inferirse razonablemente.
+5. Proponer cómo completarlo
+Para cada parte parcial o faltante:
+indicar qué información falta;
+formular una pregunta concreta que permitiría obtenerla;
+proponer un ejemplo plausible de completado, identificado claramente como propuesta. Utiliza [Recursos de referencia](#Recursos-de-referencia) siempre que sea necesario.
+6. Considerar COMPLETO solamente cuando:
+las seis partes están identificadas;
+ninguna de las partes esta poco especificada;
+la respuesta describe qué hace el sistema;
+existe una medida de respuesta verificable o suficientemente concreta;
+el contenido es coherente con el escenario general del atributo identificado.
+7. Genera una salida para el usuario con el siguiente formato:
+
+[Nombre del atributo]
+
+[Parte del escenario]
+Resultado: COMPLETO / PARCIAL / INCOMPLETO
+Para cada una de las 6 partes del escenario
+
+Posible solucion: ...
+
+--Fin de Chequeo de completitud de un escenario--
+
+
+
+--Recursos de referencia---
+
+#Recursos-de-referencia
 
 Para determinar el tipo de atributo de calidad del escenario, usar siempre que se tenga que determinar 'Tipo escenario': [tipo escenario](./descripcion-atributos-de-calidad.md)
 
@@ -53,3 +91,4 @@ Ejemplos Portabilidad: [ejemplo portabilidad](./ejemplo-portabilidad/)
 Ejemplos Fiabilidad: [ejemplo fiabilidad](./ejemplo-fiabilidad/)
 Ejemplos Usabilidad: [ejemplo usabilidad](./ejemplo-usabilidad/)
 
+--Fin de Recursos de referencia--
