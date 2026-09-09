@@ -8,9 +8,9 @@ description: "Genera escenarios de atributos de calidad con el template SEI de s
 #Pasos a seguir para la generacion:
 1. Evalua el requerimiento del usuario.
 2. Si el usuario no dio contexto del sistema para determinar los elementos, solicitar la informacion faltante.
-3. Compara e identifica el/los tipo/s de atributo/s de calidad segun las descripciones provistas en la seccion [Recursos de referencia](#Recursos-de-referencia).
-4. Redacta el escenario completando las 6 partes del template de [Template](#Atributo_de_calidad).
-5. Verifica el resultado contra cada uno de los ejemplos del atributo de calidad resultante presentes en [Recursos de referencia](#Recursos-de-referencia).
+3. Compara e identifica el/los tipo/s de atributo/s de calidad segun las descripciones provistas en la seccion [Recursos de referencia](#Recursos-de-referencia), SIEMPRE entrar en "tipo escenario" antes de determinar el/los tipo/s de atributo/s de calidad.
+4. Ver TODOS los ejemplos disponibles para el atributo de calidad definido en [Recursos de referencia](#Recursos-de-referencia) NO ver ejemplos de atributos de calidad distintos al definido.
+5. Redacta el escenario completando las 6 partes del template de [Template](#Atributo_de_calidad).
 
 
 #Atributo_de_calidad
@@ -39,8 +39,8 @@ Explicacion de las partes de la plantilla:
 --Chequeo de completitud de un escenario--
 
 #Pasos para chequeo de escenarios
-1. Identificar el atributo de calidad consultando la seccion [Recursos de referencia](#Recursos-de-referencia)
-2. Separar el escenario en las seis partes (Fuente de estimulo, Estimulo, Ambiente, Artefacto, Respuesta, Medida de la respuesta)
+1. Identificar el atributo de calidad consultando la seccion [Recursos de referencia](#Recursos-de-referencia) SIEMPRE entrar en "tipo escenario" antes de determinar el/los tipo/s de atributo/s de calidad.
+2. Separar el escenario en las seis [partes del escenario] (Fuente de estimulo/Estimulo/Ambiente/Artefacto/Respuesta/Medida de la respuesta)
 3. Intentar mapear explícitamente cada fragmento del escenario a una de las siguientes partes, para guiarte pordes pensar en las siguientes preguntas:
     Fuente de estimulo	¿Quién o qué origina el estímulo?
     Estímulo	¿Qué evento, cambio, fallo, ataque, solicitud o acción ocurre?
@@ -57,7 +57,7 @@ Explicacion de las partes de la plantilla:
 Para cada parte parcial o faltante:
 indicar qué información falta;
 formular una pregunta concreta que permitiría obtenerla;
-proponer un ejemplo plausible de completado, identificado claramente como propuesta. Utiliza [Recursos de referencia](#Recursos-de-referencia) siempre que sea necesario.
+proponer un ejemplo plausible de completado, identificado claramente como propuesta. Utiliza los ejemplos de [Recursos de referencia](#Recursos-de-referencia) siempre que sea necesario, leer TOSOS los ejemplos del atributo que calidad sobre el que se trabaja, NO leer ejemplos de atributos de calidad distintos.
 6. Considerar COMPLETO solamente cuando:
 las seis partes están identificadas;
 ninguna de las partes esta poco especificada;
@@ -82,7 +82,7 @@ Posible solucion: ...
 
 #Recursos-de-referencia
 
-Para determinar el tipo de atributo de calidad del escenario, usar siempre que se tenga que determinar 'Tipo escenario': [tipo escenario](./descripcion-atributos-de-calidad.md)
+Tipo escenario: [tipo escenario](./descripcion-atributos-de-calidad.md)
 
 Ejemplos Eficiencia: [ejemplo eficiencia](./ejemplo-eficiencia/)
 Ejemplos Funcionalidad: [ejemplo funcionalidad](./ejemplo-funcionalidad/)
