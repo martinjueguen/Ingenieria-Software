@@ -86,7 +86,7 @@ Posible solucion: ...
 1. Identificar los atributos de calidad a partir de "tipo escenario" de la seccion [Recursos de referencia](#Recursos-de-referencia).
 2. Lee el archivo "informacion arbol utilidad" presente en [Recursos de referencia](#Recursos-de-referencia), y define las prioridades y la complejidad de desarrollo de cada atributo identificado siguiendo la forma en que se muestra en el pdf.
 3. Lee el ejemplo de arbol de utilidad realizado en "ejemplo arbol" en la seccion [Recursos de referencia](#Recursos-de-referencia). Guiate por ese ejemplo para el formato en el que tenes que realizar el arbol.
-4. Genera una imagen en base a los atributos definidos, sus prioridades y complejidad, y el ejemplo de arbol. 
+4. Genera el arbol en base a los atributos definidos, sus prioridades y complejidad, y el ejemplo del pdf. 
 
 --Fin generacion del arbol de utilidad--
 
