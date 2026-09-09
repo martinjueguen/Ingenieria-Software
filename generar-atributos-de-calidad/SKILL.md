@@ -10,7 +10,8 @@ description: "Genera escenarios de atributos de calidad con el template SEI de s
 2. Si el usuario no dio contexto del sistema para determinar los elementos, solicitar la informacion faltante.
 3. Compara e identifica el/los tipo/s de atributo/s de calidad segun las descripciones provistas en la seccion [Recursos de referencia](#Recursos-de-referencia), SIEMPRE entrar en "tipo escenario" antes de determinar el/los tipo/s de atributo/s de calidad.
 4. Ver TODOS los ejemplos disponibles para el atributo de calidad definido en [Recursos de referencia](#Recursos-de-referencia) NO ver ejemplos de atributos de calidad distintos al definido.
-5. Redacta el escenario completando las 6 partes del template de [Template](#Atributo_de_calidad).
+5. Imprimir el tipo del escenario.
+6. Imprimir el escenario completando las 6 partes del template de [Template](#Atributo_de_calidad).
 
 
 #Atributo_de_calidad
