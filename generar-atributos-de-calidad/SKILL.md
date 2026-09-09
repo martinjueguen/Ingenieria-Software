@@ -80,17 +80,35 @@ Posible solucion: ...
 
 
 
+--Generacion del arbol de utilidad--
+
+#Pasos para cuando se solicite trabajar con arbol de utilidad
+1. Identificar los atributos de calidad a partir de "tipo escenario" de la seccion [Recursos de referencia](#Recursos-de-referencia).
+2. Lee el archivo "informacion arbol utilidad" presente en [Recursos de referencia](#Recursos-de-referencia), y define las prioridades y la complejidad de desarrollo de cada atributo identificado siguiendo la forma en que se muestra en el pdf.
+3. Lee el ejemplo de arbol de utilidad realizado en "ejemplo arbol" en la seccion [Recursos de referencia](#Recursos-de-referencia). Guiate por ese ejemplo para el formato en el que tenes que realizar el arbol.
+4. Genera una imagen en base a los atributos definidos, sus prioridades y complejidad, y el ejemplo de arbol. 
+
+--Fin generacion del arbol de utilidad--
+
+
 --Recursos de referencia---
 
 #Recursos-de-referencia
 
 Tipo escenario: [tipo escenario](./descripcion-atributos-de-calidad.md)
 
-Ejemplos Eficiencia: [ejemplo eficiencia](./ejemplo-eficiencia/)
-Ejemplos Funcionalidad: [ejemplo funcionalidad](./ejemplo-funcionalidad/)
-Ejemplos Mantenibilidad: [ejemplo mantenibilidad](./ejemplo-mantenibilidad/)
-Ejemplos Portabilidad: [ejemplo portabilidad](./ejemplo-portabilidad/) 
-Ejemplos Fiabilidad: [ejemplo fiabilidad](./ejemplo-fiabilidad/)
-Ejemplos Usabilidad: [ejemplo usabilidad](./ejemplo-usabilidad/)
+Ejemplos Deplegabilidad: [ejemplos desplegabilidad](./ejemplo-desplegabilidad/)
+Ejemplos Disponibilidad: [ejemplos disponibilidad](./ejemplo-disponibilidad/)
+Ejemplos Eficiencia Energetica: [ejemplos eficiencia-energetica](./ejemplo-eficiencia-energetica/)
+Ejemplos Integrabilidad: [ejemplos integrabilidad](./ejemplo-integrabilidad/) 
+Ejemplos Modificabilidad: [ejemplos modificabilidad](./ejemplo-modificabilidad/)
+Ejemplos Rendimiento: [ejemplos rendimiento](./ejemplo-rendimiento/)
+Ejemplos Seguridad Fisica: [ejemplos seguridad-fisica](./ejemplo-seguridad-fisica/)
+Ejemplos Seguridad Informatica: [ejemplos seguridad-informatica](./ejemplo-seguridad-informatica/) 
+Ejemplos Testabilidad: [ejemplos testabilidad](./ejemplo-testabilidad/)
+Ejemplos Usabilidad: [ejemplos usabilidad](./ejemplo-usabilidad/)
+
+Informacion para el arbol de utilidad: [informacion arbol utilidad](./informacion-arbol-utilidad-libro.pdf)
+Ejemplo arbol utilidad: [ejemplo arbol](./ejemplo-arbol-de-utilidad.pdf)
 
 --Fin de Recursos de referencia--
