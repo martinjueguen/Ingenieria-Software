@@ -6,4 +6,4 @@ El sistema deberá generar el reporte mensual de ventas consolidado a partir de 
 4. Artefacto: Módulo de generación de reportes y base de datos transaccional
 5. Respuesta: El sistema genera el reporte en segundo plano sin afectar el rendimiento de las operaciones de otros usuarios
 6. Medida de la Respuesta: Reporte generado en menos de 10 minutos, con uso de CPU del servidor de base de datos por debajo del 70% durante el proceso
-7. Tipo escenario: eficiencia
+7. Tipo escenario: rendimiento

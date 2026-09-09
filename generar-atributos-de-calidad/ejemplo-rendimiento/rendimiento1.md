@@ -6,4 +6,4 @@ El sistema deberá procesar las solicitudes de búsqueda de productos en el cat�
 4. Artefacto: Módulo de búsqueda y motor de indexación
 5. Respuesta: El sistema procesa y responde las consultas sin degradación perceptible
 6. Medida de la Respuesta: Tiempo de respuesta menor a 2 segundos en el 95% de las solicitudes
-7. Tipo escenario: eficiencia
+7. Tipo escenario: rendimiento
