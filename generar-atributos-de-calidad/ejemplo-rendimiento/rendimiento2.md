@@ -1,3 +1,5 @@
+Tipo escenario: Rendimiento
+
 Descripción del escenario: 
 El sistema deberá generar el reporte mensual de ventas consolidado a partir de la base de datos transaccional, sin bloquear el uso normal de la plataforma por parte de otros usuarios mientras se ejecuta el proceso.
 

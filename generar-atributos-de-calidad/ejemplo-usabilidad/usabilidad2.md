@@ -1,9 +1,12 @@
-“Usuarios de diferentes países acceden al sistema los cuales deberán adaptar su idioma”
+Tipo escenario: Usabilidad
 
-1. Fuente: Usuario
-2. Estímulo: Establecer el idioma para el mayor número de países
-3. Ambiente: Sistema finalizado y operativo
-4. Artefacto: Idioma del sistema
-5. Respuesta: Presentar el sistema al usuario con el idioma escogido
-6. Medida de la Respuesta: El cambio de idioma debe hacerse de forma correcta y sin afectar al propio funcionamiento
-7. Tipo escenario: usabilidad
+Descripción del escenario:
+Un usuario de una aplicación de diseño realiza por error una eliminación masiva de elementos gráficos y emite la orden de cancelar o deshacer el cambio.
+
+Solución (Plantilla de 6 partes):
+1. Fuente: Usuario final
+2. Estímulo: Comando de cancelación / deshacer (undo)
+3. Ambiente: Operación en tiempo de ejecución durante el trabajo activo
+4. Artefacto: Interfaz gráfica de usuario y gestor de estado
+5. Respuesta: El sistema intercepta el comando (user initiative) y restaura el estado guardado mediante la táctica undo y el patrón Memento
+6. Medida de la Respuesta: Estado anterior recuperado en menos de 0,5 segundos, sin congelamiento de pantalla ni corrupción del documento

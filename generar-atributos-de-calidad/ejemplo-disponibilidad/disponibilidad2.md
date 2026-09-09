@@ -1,3 +1,5 @@
+Tipo escenario: Disponibilidad 
+
 Descripción del escenario:
 En una plataforma bancaria en línea, la base de datos primaria de transacciones sufre una falla de hardware en el procesador durante una jornada pico de pago de salarios.
 

@@ -1,3 +1,5 @@
+Tipo escenario: Disponibilidad 
+
 Descripción del escenario: 
 Un servidor en una granja de servidores falla durante la operación normal; el sistema informa al operador y continúa operando sin tiempo de inactividad.
 

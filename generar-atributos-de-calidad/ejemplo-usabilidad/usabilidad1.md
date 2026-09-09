@@ -1,9 +1,12 @@
-“Usuarios novatos usan por primera vez el sistema”
+Tipo escenario: Usabilidad
 
+Descripción del escenario:
+El usuario descarga una nueva aplicación y logra utilizarla productivamente tras 2 minutos de experimentación.
+
+Solución (Plantilla de 6 partes):
 1. Fuente: Usuario
-2. Estímulo: Usar el sistema
-3. Ambiente: Sistema finalizado y operativo
-4. Artefacto: Sistema
-5. Respuesta: El sistema presentará un estructura simple y fácil de utilizar
-6. Medida de la Respuesta: El usuario debe aprender a utilizar el sistema en el menor tiempo posible
-7. Tipo escenario: usabilidad
+2. Estímulo: Descarga una nueva aplicación
+3. Ambiente: Tiempo de ejecución en la plataforma existente
+4. Artefacto: Plataforma existente / Sistema / GUI
+5. Respuesta: El usuario utiliza la aplicación productivamente
+6. Medida de la Respuesta: Operación productiva lograda tras solo 2 minutos de experimentación
