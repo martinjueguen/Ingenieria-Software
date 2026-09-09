@@ -1,7 +1,6 @@
-Tipo escenario: Disponibilidad 
+Escenario: En una plataforma bancaria en línea, la base de datos primaria de transacciones sufre una falla de hardware en el procesador durante una jornada pico de pago de salarios.
 
-Descripción del escenario:
-En una plataforma bancaria en línea, la base de datos primaria de transacciones sufre una falla de hardware en el procesador durante una jornada pico de pago de salarios.
+Tipo escenario: Disponibilidad 
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Servidor interno de base de datos (hardware)

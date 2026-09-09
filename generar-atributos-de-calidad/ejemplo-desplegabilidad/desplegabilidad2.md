@@ -1,10 +1,8 @@
+Escenario: El equipo de desarrollo de una plataforma de comercio electrónico libera un parche de seguridad para el microservicio de procesamiento de pagos utilizando un despliegue canario (canary testing).
+
 Tipo escenario: Desplegabilidad
 
-Descripción del escenario:
-El equipo de desarrollo de una plataforma de comercio electrónico libera un parche de seguridad para el microservicio de procesamiento de pagos utilizando un despliegue canario (canary testing).
-
 Solución (Plantilla de 6 partes):
-
 Fuente: Equipo DevOps / Sistema de integración continua
 Estímulo: Solicitud aprobada para reemplazar la versión activa del servicio con un parche de seguridad
 Ambiente: Entorno de producción en ejecución parcial

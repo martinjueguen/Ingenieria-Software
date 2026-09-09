@@ -1,5 +1,5 @@
 ---
-name: atributos-de-calidad-y-arbol-de-utilidad
+name: generar-atributos-de-calidad
 description: "Genera escenarios de atributos de calidad con el template SEI de seis partes, verifica su completitud, propone cómo completar los campos faltantes y construye árboles de utilidad con refinamientos y prioridades de valor de negocio. Se centra en los 10 atributos tratados en el libro 'software-architecture-in-practice-4': Availability, Deployability, Energy Efficiency, Integrability, Modifiability, Performance, Safety, Security, Testability y Usability. Usar esta skill siempre que el usuario mencione atributos de calidad, requisitos no funcionales , escenarios de Disponibilidad, Desplegabilidad, Eficiencia energética, Integrabilidad, Modificabilidad, Rendimiento, Seguridad, Testabilidad, Usabilidad., árbol de utilidad, o pida revisar/completar/priorizar requisitos de calidad de un sistema — incluso si no usa literalmente estos términos"
 ---
 
@@ -12,6 +12,7 @@ description: "Genera escenarios de atributos de calidad con el template SEI de s
 4. Ver TODOS los ejemplos disponibles para el atributo de calidad definido en [Recursos de referencia](#Recursos-de-referencia) NO ver ejemplos de atributos de calidad distintos al definido.
 5. Imprimir el tipo del escenario.
 6. Imprimir el escenario completando las 6 partes del template de [Template](#Atributo_de_calidad).
+7. NO reescribir el escenario
 
 
 #Atributo_de_calidad

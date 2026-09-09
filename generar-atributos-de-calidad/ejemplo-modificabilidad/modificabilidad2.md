@@ -1,7 +1,6 @@
-Tipo escenario: Modificabilidad
+Escenario: El departamento financiero solicita agregar una nueva regla de cálculo de impuestos regionales en un sistema de facturación electrónica sin modificar el código fuente principal.
 
-Descripción del escenario:
-El departamento financiero solicita agregar una nueva regla de cálculo de impuestos regionales en un sistema de facturación electrónica sin modificar el código fuente principal.
+Tipo escenario: Modificabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Analista de negocio / Administrador del sistema

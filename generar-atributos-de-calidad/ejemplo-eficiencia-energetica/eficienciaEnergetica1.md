@@ -1,7 +1,6 @@
-Tipo escenario: Eficiencia Energética
+Escenario: Un administrador desea ahorrar energía en tiempo de ejecución desasignando recursos no utilizados durante períodos fuera de hora pico. El sistema desasigna recursos manteniendo una latencia en el peor de los casos de 2 segundos en las consultas a la base de datos, ahorrando en promedio el 50% de la energía total requerida.
 
-Descripción del escenario:
-Un administrador desea ahorrar energía en tiempo de ejecución desasignando recursos no utilizados durante períodos fuera de hora pico. El sistema desasigna recursos manteniendo una latencia en el peor de los casos de 2 segundos en las consultas a la base de datos, ahorrando en promedio el 50% de la energía total requerida.
+Tipo escenario: Eficiencia Energética
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Administrador (manager)

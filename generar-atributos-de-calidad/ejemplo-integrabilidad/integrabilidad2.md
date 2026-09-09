@@ -1,7 +1,6 @@
-Tipo escenario: Integrabilidad
+Escenario: Una plataforma de salud requiere integrar un nuevo servicio de historial clínico provisto por un tercero que utiliza estructuras de datos y formatos XML heterogéneos.
 
-Descripción del escenario:
-Una plataforma de salud requiere integrar un nuevo servicio de historial clínico provisto por un tercero que utiliza estructuras de datos y formatos XML heterogéneos.
+Tipo escenario: Integrabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Proveedor de componentes / Stakeholder de la misión

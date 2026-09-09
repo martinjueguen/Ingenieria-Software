@@ -1,10 +1,8 @@
+Escenario: Se dispone de una nueva versión del servicio de autenticación/autorización en el mercado de componentes y el product owner decide incorporarla. El nuevo servicio debe probarse internamente y desplegarse en producción sin introducir defectos ni violar ningún acuerdo de nivel de servicio (SLA).
+
 Tipo escenario: Desplegabilidad
 
-Descripción del escenario:
-Se dispone de una nueva versión del servicio de autenticación/autorización en el mercado de componentes y el product owner decide incorporarla. El nuevo servicio debe probarse internamente y desplegarse en producción sin introducir defectos ni violar ningún acuerdo de nivel de servicio (SLA).
-
 Solución (Plantilla de 6 partes):
-
 1. Fuente: Mercado de componentes / Product owner
 2. Estímulo: Liberación de una nueva versión del servicio de autenticación/autorización y decisión de incorporarla
 3. Ambiente: Entorno de producción

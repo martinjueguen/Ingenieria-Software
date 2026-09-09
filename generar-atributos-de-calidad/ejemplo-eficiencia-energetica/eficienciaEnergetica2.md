@@ -1,7 +1,6 @@
-Tipo escenario: Eficiencia Energética
+Escenario: Una aplicación móvil de navegación GPS detecta que la batería del teléfono inteligente ha caído a un nivel crítico, por debajo del 15%, y busca reducir el consumo de energía mientras el usuario conduce.
 
-Descripción del escenario:
-Una aplicación móvil de navegación GPS detecta que la batería del teléfono inteligente ha caído a un nivel crítico, por debajo del 15%, y busca reducir el consumo de energía mientras el usuario conduce.
+Tipo escenario: Eficiencia Energética
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Agente automatizado / Sistema operativo del dispositivo móvil

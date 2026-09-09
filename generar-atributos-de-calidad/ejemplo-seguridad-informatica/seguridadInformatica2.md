@@ -1,7 +1,6 @@
-Tipo escenario: Seguridad de la Información
+Escenario: Un atacante externo intenta realizar transacciones bancarias utilizando credenciales interceptadas en un ataque de suplantación de identidad.
 
-Descripción del escenario:
-Un atacante externo intenta realizar transacciones bancarias utilizando credenciales interceptadas en un ataque de suplantación de identidad.
+Tipo escenario: Seguridad de la Información
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Atacante externo no identificado

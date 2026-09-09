@@ -1,7 +1,6 @@
-Tipo escenario: Seguridad Física
+Escenario: En un vehículo autónomo, el radar lidar frontal pierde comunicación temporal debido a interferencias extremas mientras transita a alta velocidad por carretera.
 
-Descripción del escenario:
-En un vehículo autónomo, el radar lidar frontal pierde comunicación temporal debido a interferencias extremas mientras transita a alta velocidad por carretera.
+Tipo escenario: Seguridad Física
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Radar Lidar frontal (sensor físico)

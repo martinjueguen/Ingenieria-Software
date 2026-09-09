@@ -1,7 +1,6 @@
-Tipo escenario: Modificabilidad
+Escenario: Un desarrollador desea cambiar la interfaz de usuario. Este cambio se realizará en el código en tiempo de diseño, tomará menos de 3 horas realizar y probar el cambio, y no se producirán efectos secundarios.
 
-Descripción del escenario:
-Un desarrollador desea cambiar la interfaz de usuario. Este cambio se realizará en el código en tiempo de diseño, tomará menos de 3 horas realizar y probar el cambio, y no se producirán efectos secundarios.
+Tipo escenario: Modificabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Desarrollador

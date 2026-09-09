@@ -1,7 +1,6 @@
-Tipo escenario: Testabilidad
+Escenario: El desarrollador completa una unidad de código durante el desarrollo y realiza una secuencia de pruebas cuyos resultados se capturan, proporcionando una cobertura de rutas del 85% en 30 minutos.
 
-Descripción del escenario:
-El desarrollador completa una unidad de código durante el desarrollo y realiza una secuencia de pruebas cuyos resultados se capturan, proporcionando una cobertura de rutas del 85% en 30 minutos.
+Tipo escenario: Testabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Desarrollador

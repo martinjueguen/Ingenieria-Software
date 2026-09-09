@@ -1,7 +1,6 @@
-Tipo escenario: Integrabilidad
+Escenario: Un nuevo componente de filtrado de datos pasa a estar disponible en el mercado de componentes. El nuevo componente se integra en el sistema y se despliega en un mes, con no más de 1 persona-mes de esfuerzo.
 
-Descripción del escenario:
-Un nuevo componente de filtrado de datos pasa a estar disponible en el mercado de componentes. El nuevo componente se integra en el sistema y se despliega en un mes, con no más de 1 persona-mes de esfuerzo.
+Tipo escenario: Integrabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Mercado de componentes (component marketplace)

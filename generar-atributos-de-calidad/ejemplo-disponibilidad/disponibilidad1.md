@@ -1,7 +1,6 @@
-Tipo escenario: Disponibilidad 
+Escenario: Un servidor en una granja de servidores falla durante la operación normal; el sistema informa al operador y continúa operando sin tiempo de inactividad.
 
-Descripción del escenario: 
-Un servidor en una granja de servidores falla durante la operación normal; el sistema informa al operador y continúa operando sin tiempo de inactividad.
+Tipo escenario: Disponibilidad 
 
 Solución (Plantilla de 6 partes):
 1. Fuente del estímulo: Servidor (en una granja de servidores).

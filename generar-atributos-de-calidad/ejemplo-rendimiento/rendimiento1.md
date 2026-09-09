@@ -1,7 +1,6 @@
-Tipo escenario: Rendimiento 
+Escenario: El sistema deberá procesar las solicitudes de búsqueda de productos en el catálogo web, devolviendo resultados incluso durante picos de tráfico como ofertas especiales o campañas de descuento.
 
-Descripción del escenario: 
-El sistema deberá procesar las solicitudes de búsqueda de productos en el catálogo web, devolviendo resultados incluso durante picos de tráfico como ofertas especiales o campañas de descuento.
+Tipo escenario: Rendimiento 
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Usuarios concurrentes del sitio web

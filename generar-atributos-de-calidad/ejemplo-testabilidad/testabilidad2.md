@@ -1,7 +1,6 @@
-Tipo escenario: Testabilidad
+Escenario: Un equipo de QA automatiza la ejecución de pruebas sobre un módulo de cálculo de préstamos, aislándolo de las dependencias con la base de datos real.
 
-Descripción del escenario:
-Un equipo de QA automatiza la ejecución de pruebas sobre un módulo de cálculo de préstamos, aislándolo de las dependencias con la base de datos real.
+Tipo escenario: Testabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Herramienta automatizada de CI/CD / Probador de integración

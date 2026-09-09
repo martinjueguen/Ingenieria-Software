@@ -1,7 +1,7 @@
-Tipo escenario: Usabilidad
-
-Descripción del escenario:
+Escenario:
 El usuario descarga una nueva aplicación y logra utilizarla productivamente tras 2 minutos de experimentación.
+
+Tipo escenario: Usabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Usuario

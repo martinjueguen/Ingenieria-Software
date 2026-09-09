@@ -1,7 +1,6 @@
-Tipo escenario: Usabilidad
+Escenario: Un usuario de una aplicación de diseño realiza por error una eliminación masiva de elementos gráficos y emite la orden de cancelar o deshacer el cambio.
 
-Descripción del escenario:
-Un usuario de una aplicación de diseño realiza por error una eliminación masiva de elementos gráficos y emite la orden de cancelar o deshacer el cambio.
+Tipo escenario: Usabilidad
 
 Solución (Plantilla de 6 partes):
 1. Fuente: Usuario final
