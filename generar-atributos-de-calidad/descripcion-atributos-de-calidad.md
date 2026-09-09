@@ -95,40 +95,40 @@ Ejemplo de escenario: Un sensor de un sistema de monitoreo de pacientes deja de 
 
 Descripcion general: Security busca proteger principalmente confidencialidad, integridad y disponibilidad (CIA) frente a ataques. Un ataque es un intento de comprometer alguno de estos aspectos.
 
-- Origen del estimulo: El ataque puede provenir del exterior o interior de la organización. Puede provenir de una persona o de otro sistema, y la fuente puede estar identificada o ser desconocida.
-- Estimulo: El estímulo es un ataque.
-- Ambiente: Es el estado del sistema cuando ocurre el ataque.
-- Artefacto: Es el objetivo del ataque.
-- Respuesta: El sistema debe mantener confidencialidad, integridad y disponibilidad. También debe registrar las actividades y notificar cuando detecta un posible ataque.
-- Medida de respuesta: Las medidas están relacionadas con la frecuencia de ataques exitosos, el tiempo y costo para resistir/reparar ataques y el daño producido.
+- Origen del estimulo: El ataque puede provenir del exterior o interior de la organización. Puede provenir de una persona o de otro sistema, y la fuente puede estar identificada o ser desconocida. Posibles valores: Humano; otro sistema; dentro/fuera de la organización; previamente identificado/desconocido.
+- Estimulo: El estímulo es un ataque. Posibles valores: Intento no autorizado de mostrar datos, capturarlos, modificarlos/eliminarlos, acceder a servicios, cambiar el comportamiento del sistema o reducir la disponibilidad.
+- Ambiente: Es el estado del sistema cuando ocurre el ataque. Posibles valores: Online/offline, conectado/desconectado de una red, detrás de un firewall/abierto a la red, completamente operativo/parcialmente operativo/no operativo.
+- Artefacto: Es el objetivo del ataque. Posibles valores: Servicios del sistema, datos del sistema, componentes/recursos, datos producidos o consumidos por el sistema.
+- Respuesta: El sistema debe mantener confidencialidad, integridad y disponibilidad. También debe registrar las actividades y notificar cuando detecta un posible ataque. Posibles valores: Proteger datos/servicios, impedir modificaciones no autorizadas, identificar las partes de una transacción, impedir repudio, mantener disponibilidad, registrar accesos/modificaciones, registrar intentos y notificar.
+- Medida de respuesta: Las medidas están relacionadas con la frecuencia de ataques exitosos, el tiempo y costo para resistir/reparar ataques y el daño producido. Posibles valores: Recursos comprometidos/protegidos, precisión de detección, tiempo hasta detectar un ataque, ataques resistidos, tiempo de recuperación, cantidad de datos vulnerables. 
 
-Ejemplo de escenario:
+Ejemplo de escenario: Un empleado descontento intenta modificar de manera indebida una tabla de salarios. El acceso no autorizado es detectado y queda registrado en una auditoría; los datos correctos son restaurados dentro de un día.
 
-## 9. Testability
+## 9. Testability — Testabilidad
 
-Descripcion general:
+Descripcion general: La testabilidad se refiere a qué tan fácil es realizar pruebas sobre el sistema, controlar el estado que se quiere probar, observar los resultados y descubrir fallos.
 
-- Origen del estimulo: 
-- Estimulo: 
-- Ambiente: 
-- Artefacto: 
-- Respuesta: 
-- Medida de respuesta:
+- Origen del estimulo: Los casos de prueba pueden ser ejecutados por una persona o una herramienta automática de pruebas. Posibles valores: Testers unitarios, de integración, de sistema, de aceptación, usuarios finales; pruebas manuales o automatizadas.
+- Estimulo: Se inicia una prueba o conjunto de pruebas. Estas sirven para validar funciones, validar cualidades o descubrir nuevas amenazas a la calidad. Posibles valores: Validar funciones, validar atributos de calidad, descubrir amenazas emergentes.
+- Ambiente: Las pruebas ocurren en diferentes eventos o hitos del ciclo de vida. Posibles valores: Finalización de un incremento de código, integración de un subsistema, implementación completa del sistema, despliegue en producción, entrega al cliente, calendario de pruebas.
+- Artefacto: Es la parte del sistema que se prueba y cualquier infraestructura necesaria para realizar la prueba. Posibles valores: Unidad de código, componentes, servicios, subsistemas, sistema completo, infraestructura de pruebas.
+- Respuesta: El sistema y la infraestructura de pruebas deben poder controlarse para realizar las pruebas deseadas y observar sus resultados. Posibles valores: Ejecutar la suite y capturar resultados, capturar la actividad que produjo el fallo, controlar y monitorear el estado del sistema.
+- Medida de respuesta: Busca representar qué tan fácilmente el sistema bajo prueba revela sus fallos o defectos. Posibles valores: Esfuerzo para encontrar un fallo, esfuerzo para alcanzar determinado porcentaje de cobertura de estados, probabilidad de que la próxima prueba revele un fallo, tiempo de pruebas, esfuerzo de detección, tiempo de preparación de infraestructura, esfuerzo para llevar el sistema a un estado específico, reducción de exposición al riesgo.
 
-Ejemplo de escenario:
+Ejemplo de escenario: Un desarrollador termina una unidad de código y realiza una secuencia de pruebas cuyos resultados son capturados, obteniendo un 85 % de cobertura de caminos en 30 minutos.
 
-## 10. Usability
+## 10. Usability — Usabilidad
 
-Descripcion general:
+Descripcion general: La usabilidad se ocupa de qué tan fácil es para el usuario realizar una tarea deseada y del tipo de soporte que proporciona el sistema.
 
-- Origen del estimulo: 
-- Estimulo: 
-- Ambiente: 
-- Artefacto: 
-- Respuesta: 
-- Medida de respuesta:
+- Origen del estimulo: El usuario final, posiblemente desempeñando un rol especializado, es la fuente principal del estímulo. También puede serlo un evento externo al sistema al que el usuario reacciona. Posibles valores: 
+- Estimulo: Es lo que el usuario final quiere conseguir. Posibles valores: Utilizar el sistema eficientemente, aprender a utilizarlo, minimizar el impacto de errores, adaptar el sistema, configurar el sistema.
+- Ambiente: Las acciones del usuario relacionadas con la usabilidad ocurren durante la ejecución o configuración del sistema. Posibles valores: Runtime, configuración del sistema.
+- Artefacto: Es la parte del sistema que recibe la interacción del usuario. Posibles valores: GUI, interfaz de línea de comandos, interfaz de voz, pantalla táctil.
+- Respuesta: El sistema debe responder proporcionando las funcionalidades necesarias, anticipándose a las necesidades del usuario y proporcionando retroalimentación apropiada. Posibles valores: Proporcionar funcionalidades, anticipar necesidades, proporcionar feedback apropiado.
+- Medida de respuesta: Mide cómo responde el sistema desde la perspectiva de la interacción del usuario. Posibles valores: Tiempo de tarea, cantidad de errores, tiempo de aprendizaje, relación entre tiempo de aprendizaje y tiempo de tarea, cantidad de tareas realizadas, satisfacción, conocimiento adquirido, proporción de operaciones exitosas, tiempo/datos perdidos por errores.
 
-Ejemplo de escenario:
+Ejemplo de escenario: Un usuario descarga una nueva aplicación y consigue utilizarla productivamente después de solamente 2 minutos de experimentación.
 
 
 Fuente: *Software Architecture in Practice*, Fourth Edition, capítulos 4–13.
