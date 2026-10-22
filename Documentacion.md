@@ -12,12 +12,12 @@ Clasificación: Rendimiento
 
 R1 · Propagación de actualizaciones
 
- Fuente: sistema externo (aerolínea, hotel o arrendadora) que genera el cambio
- Estímulo: evento esporádico de actualización de una reserva (ej. cancelación o cambio de puerta)
- Ambiente: operación normal
- Artefacto: pipeline de ingesta de actualizaciones y vista del viaje en la app
- Respuesta: recibe, normaliza, persiste y muestra la actualización en el viaje
- Medida: ≤ 5 minutos desde que la fuente la genera hasta que se ve en la app
+  Fuente: sistema externo (aerolínea, hotel o arrendadora) que genera el cambio
+  Estímulo: evento esporádico de actualización de una reserva (ej. cancelación o cambio de puerta)
+  Ambiente: operación normal
+  Artefacto: pipeline de ingesta de actualizaciones y vista del viaje en la app
+  Respuesta: recibe, normaliza, persiste y muestra la actualización en el viaje
+  Medida: ≤ 5 minutos desde que la fuente la genera hasta que se ve en la app
 
 R2 · Latencia web
 
