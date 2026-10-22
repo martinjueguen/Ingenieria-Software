@@ -136,7 +136,7 @@ Fuente: propietario del producto / desarrollador
 Estímulo: directiva de agregar un nuevo medio de transporte (ej. trenes)  
 Ambiente: tiempo de diseño  
 Artefacto: modelo de dominio de reservas, contratos (specs) y módulo de integración  
-Respuesta: se extiende el modelo y el contrato, se registra el ADR, se prueba y se despliega sin modificar los tipos de reserva existentes
+Respuesta: se extiende el modelo y el contrato, se registra el ADR, se prueba y se despliega sin modificar los tipos de reserva existentes  
 Medida: ≤ 3 semanas y 0 defectos en vuelos, hoteles y autos, y 100 % de los cambios trazables a un ADR y a una spec  
 
 7. Usabilidad e Internacionalización  
