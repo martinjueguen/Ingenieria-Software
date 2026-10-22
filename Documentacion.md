@@ -162,6 +162,6 @@ Fuente: stakeholder del negocio
 Estímulo: directiva de agregar un nuevo idioma y mercado (moneda, formatos de fecha, normativa de datos)  
 Ambiente: tiempo de configuración y despliegue  
 Artefacto: interfaz de usuario, recursos de localización y despliegue regional  
-Respuesta: se incorporan recursos de localización externos y se despliega la nueva región sin cambiar el núcleo
+Respuesta: se incorporan recursos de localización externos y se despliega la nueva región sin cambiar el núcleo  
 Medida: ≤ 1 semana, 0 líneas del código del núcleo modificadas y 0 defectos introducidos  
 
