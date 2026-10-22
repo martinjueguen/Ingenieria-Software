@@ -25,7 +25,7 @@ Fuente: viajero desde un navegador web
 Estímulo: solicitud para ver el panel con sus viajes y reservas  
 Ambiente: operación normal, carga habitual de la semana  
 Artefacto: API del panel de viajes y base de datos de itinerarios  
-Respuesta: devuelve el listado de viajes con sus reservas
+Respuesta: devuelve el listado de viajes con sus reservas  
 Medida: tiempo de respuesta ≤ 800 milisegundos  
 
 R3 · Primer despliegue en móvil  
