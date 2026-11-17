@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trotamundos</title>
+  <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+  <!-- Capa 1: Interfaz web (ADD It.1). Consume exclusivamente la API REST /api/v1. -->
+  <div id="vista-login" class="login tarjeta" hidden>
+    <h2 data-t="login.titulo">Ingresá a tu panel de viajes</h2>
+    <form id="form-login">
+      <label data-t="login.email">Correo</label>
+      <input name="email" type="email" value="ana@trotamundos.demo" required>
+      <label data-t="login.clave">Clave</label>
+      <input name="clave" type="password" value="demo1234" required>
+      <p><button class="primario" data-t="login.entrar">Entrar</button></p>
+      <p class="suave">Demo: ana@, bruno@, carla@, datos@ (analista), ops@ (operaciones) — @trotamundos.demo / demo1234</p>
+    </form>
+  </div>
+
+  <div id="vista-app" hidden>
+    <header>
+      <h1>🧭 <span data-t="app.titulo">Trotamundos</span></h1>
+      <nav id="nav"></nav>
+      <span class="suave" id="quien"></span>
+      <a class="boton" href="/movil">📱</a>
+      <button id="salir" data-t="nav.salir">Salir</button>
+    </header>
+    <main id="contenido"></main>
+  </div>
+
+  <dialog id="dialogo"><div id="dialogo-cuerpo"></div></dialog>
+  <div id="aviso"></div>
+
+  <script src="/static/comun.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

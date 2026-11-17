@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trotamundos/eventos/proveedor.actualizacion",
+  "title": "proveedor.actualizacion",
+  "description": "Notificación de un proveedor turístico en su formato propietario, pendiente de traducir al modelo canónico por su adaptador (US-03, QA-R1, ADR-0007, ADR-0008).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["proveedor", "origen", "recibido_en", "carga"],
+  "properties": {
+    "proveedor": {"type": "string", "minLength": 1},
+    "origen": {"enum": ["webhook"]},
+    "recibido_en": {"type": "string", "format": "date-time"},
+    "carga": {"type": "object"}
+  }
+}

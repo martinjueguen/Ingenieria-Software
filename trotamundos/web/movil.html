@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trotamundos móvil</title>
+  <!--
+    Vista móvil (Capa 1). QA-R3: primer contenido útil < 1,4 s → página autocontenida
+    (CSS y JS en línea, sin dependencias) que pide solo /api/v1/movil/resumen (ADR-0005).
+    QA-U1: usa el GPS del dispositivo para mostrar distancia y ruta al próximo tramo
+    (información accesible en ≤ 2 toques).
+  -->
+  <style>
+    :root { --f: #f5f6f8; --t: #1d2330; --s: #5d6677; --c: #fff; --p: #1f6feb; --a: #9a6700; }
+    @media (prefers-color-scheme: dark) { :root { --f: #0f141b; --t: #e6e9ef; --s: #9aa4b2; --c: #171d26; --p: #4c8dff; --a: #d29922; } }
+    body { margin: 0; font: 16px/1.4 system-ui, sans-serif; background: var(--f); color: var(--t); padding: 16px; }
+    .card { background: var(--c); border-radius: 16px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-bottom: 14px; }
+    .grande { font-size: 22px; font-weight: 700; margin: 4px 0; }
+    .s { color: var(--s); font-size: 14px; }
+    .alerta { color: var(--a); font-size: 14px; }
+    a.btn, button { display: block; text-align: center; padding: 14px; border-radius: 12px; border: 0; background: var(--p);
+      color: #fff; font: inherit; font-weight: 600; text-decoration: none; margin-top: 12px; width: 100%; }
+    #dist { font-size: 28px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="card" id="tramo"><div class="s">…</div></div>
+  <div class="card" id="gps" hidden>
+    <div class="s" id="gps-t">Distancia</div><div id="dist">—</div>
+    <a class="btn" id="ruta" target="_blank" rel="noopener">Cómo llegar</a>
+  </div>
+  <div class="s" id="meta"></div>
+  <a class="s" href="/">← panel completo</a>
+<script>
+"use strict";
+const token = localStorage.getItem("tm_token");
+const perfil = JSON.parse(localStorage.getItem("tm_perfil") || "null");
+if (!token) location.href = "/";
+const T = {
+  es: { prox: "Próximo tramo", nada: "No tenés tramos próximos", dist: "Distancia desde tu ubicación", ruta: "Cómo llegar", ult: "Última actualización", activos: "viajes activos" },
+  en: { prox: "Next leg", nada: "No upcoming legs", dist: "Distance from your location", ruta: "Get directions", ult: "Last update", activos: "active trips" },
+  pt: { prox: "Próximo trecho", nada: "Sem trechos próximos", dist: "Distância da sua localização", ruta: "Como chegar", ult: "Última atualização", activos: "viagens ativas" },
+}[(perfil && perfil.idioma) || "es"] || {};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fecha = iso => new Intl.DateTimeFormat((perfil && perfil.idioma) || "es", { timeZone: (perfil && perfil.zona_horaria) || undefined,
+  weekday: "short", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(iso));
+
+function km(a, b, c, d) {  // distancia haversine
+  const r = Math.PI / 180, R = 6371;
+  const x = Math.sin((c - a) * r / 2) ** 2 + Math.cos(a * r) * Math.cos(c * r) * Math.sin((d - b) * r / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(x));
+}
+
+const t0 = performance.now();
+fetch("/api/v1/movil/resumen", { headers: { Authorization: "Bearer " + token } })
+  .then(r => { if (r.status === 401) { localStorage.clear(); location.href = "/"; } return r.json(); })
+  .then(d => {
+    const el = document.getElementById("tramo");
+    const p = d.proximo;
+    if (!p) { el.innerHTML = `<div class="grande">${T.nada}</div>`; return; }
+    el.innerHTML = `<div class="s">${T.prox} · ${esc(p.viaje)}</div>
+      <div class="grande">${esc(p.titulo)}</div>
+      <div>${fecha(p.inicio)} · ${esc(p.codigo)}</div>
+      ${p.detalle ? `<div class="grande">${esc(p.detalle)}</div>` : ""}
+      <div class="s">${esc(p.destino)} · ${esc(p.estado)}</div>
+      ${p.sincronizacion === "desactualizada" ? `<div class="alerta">⚠ ${T.ult}</div>` : ""}`;
+    document.getElementById("meta").textContent =
+      `${d.viajes_activos} ${T.activos} · ${Math.round(performance.now() - t0)} ms`;
+    if (p.lat == null || !navigator.geolocation) return;
+    document.getElementById("gps-t").textContent = T.dist;
+    const ruta = document.getElementById("ruta");
+    ruta.textContent = T.ruta;
+    ruta.href = `https://www.openstreetmap.org/directions?route=%3B${p.lat}%2C${p.lon}`;
+    document.getElementById("gps").hidden = false;
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude, longitude } = pos.coords;
+      document.getElementById("dist").textContent = `${km(latitude, longitude, p.lat, p.lon).toFixed(1)} km`;
+      ruta.href = `https://www.openstreetmap.org/directions?route=${latitude}%2C${longitude}%3B${p.lat}%2C${p.lon}`;
+    }, () => { document.getElementById("dist").textContent = "GPS —"; }, { timeout: 8000, maximumAge: 60000 });
+  });
+</script>
+</body>
+</html>

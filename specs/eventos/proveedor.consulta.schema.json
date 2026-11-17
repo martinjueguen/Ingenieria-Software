@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trotamundos/eventos/proveedor.consulta",
+  "title": "proveedor.consulta",
+  "description": "Consulta pendiente a la API de un proveedor (sondeo, reconciliación o reintento con backoff) (US-03, QA-D2, ADR-0010).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["proveedor", "codigo_confirmacion"],
+  "properties": {
+    "proveedor": {"type": "string", "minLength": 1},
+    "codigo_confirmacion": {"type": "string", "minLength": 1}
+  }
+}

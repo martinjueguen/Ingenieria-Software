@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trotamundos/eventos/reserva.cambiada",
+  "title": "reserva.cambiada",
+  "description": "Evento de dominio emitido por el Servicio de Reservas tras confirmar un cambio. Lo consume el Exportador analítico (US-07, ADR-0014).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reserva_id", "usuario_id", "operacion", "tipo", "proveedor", "estado", "fuente", "inicio",
+               "ciudad_destino", "pais_destino", "anticipacion_dias", "momento"],
+  "properties": {
+    "reserva_id": {"type": "string"},
+    "usuario_id": {"type": "string"},
+    "operacion": {"enum": ["creada", "actualizada", "cancelada", "eliminada"]},
+    "tipo": {"type": "string"},
+    "proveedor": {"type": "string"},
+    "estado": {"enum": ["confirmada", "modificada", "cancelada"]},
+    "fuente": {"enum": ["manual", "correo", "proveedor"]},
+    "inicio": {"type": "string", "format": "date-time"},
+    "ciudad_destino": {"type": "string"},
+    "pais_destino": {"type": "string"},
+    "anticipacion_dias": {"type": "integer", "minimum": 0},
+    "momento": {"type": "string", "format": "date-time"}
+  }
+}

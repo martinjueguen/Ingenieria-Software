@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trotamundos/eventos/correo.recibido",
+  "title": "correo.recibido",
+  "description": "Correo de viaje que pasó el filtro de whitelist y debe procesar el Motor de extracción (US-01, US-02, ADR-0008, ADR-0009).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["usuario_id", "mensaje_id", "remitente", "asunto", "cuerpo", "recibido_en"],
+  "properties": {
+    "usuario_id": {"type": "string", "minLength": 1},
+    "mensaje_id": {"type": "string", "minLength": 1},
+    "remitente": {"type": "string", "pattern": "^[^@ ]+@[^@ ]+$"},
+    "asunto": {"type": "string"},
+    "cuerpo": {"type": "string"},
+    "recibido_en": {"type": "string", "format": "date-time"}
+  }
+}

@@ -1,0 +1,2360 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Trotamundos API",
+    "description": "Contrato REST del panel de gestión de viajes Trotamundos. Todas las fechas en UTC ISO-8601 (ADR-0016).",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "autenticacion"
+        ],
+        "summary": "Iniciar sesión",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credenciales"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sesion"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usuarios/yo": {
+      "get": {
+        "tags": [
+          "autenticacion"
+        ],
+        "summary": "Perfil y preferencias regionales",
+        "operationId": "perfil_api_v1_usuarios_yo_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Perfil"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "autenticacion"
+        ],
+        "summary": "Cambiar idioma, zona horaria, moneda o agencia",
+        "operationId": "cambiar_perfil_api_v1_usuarios_yo_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambioPerfil"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Perfil"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/notificaciones": {
+      "get": {
+        "tags": [
+          "autenticacion"
+        ],
+        "summary": "Notificaciones del usuario (p. ej. revocación de acceso al correo)",
+        "operationId": "notificaciones_api_v1_notificaciones_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Notificaciones Api V1 Notificaciones Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/viajes": {
+      "get": {
+        "tags": [
+          "viajes"
+        ],
+        "summary": "Panel: viajes con sus reservas",
+        "operationId": "panel_api_v1_viajes_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "incluir_archivados",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Incluir Archivados"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ViajeDTO"
+                  },
+                  "title": "Response Panel Api V1 Viajes Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/viajes/compartidos": {
+      "get": {
+        "tags": [
+          "viajes"
+        ],
+        "summary": "Viajes que otros compartieron conmigo",
+        "operationId": "compartidos_api_v1_viajes_compartidos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ViajeDTO"
+                  },
+                  "type": "array",
+                  "title": "Response Compartidos Api V1 Viajes Compartidos Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/viajes/{viaje_id}": {
+      "get": {
+        "tags": [
+          "viajes"
+        ],
+        "summary": "Itinerario de un viaje (propio o compartido)",
+        "operationId": "obtener_api_v1_viajes__viaje_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViajeDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Inexistente o sin autorización (no se distingue)"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "viajes"
+        ],
+        "summary": "Renombrar un viaje",
+        "operationId": "renombrar_api_v1_viajes__viaje_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambioViaje"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViajeDTO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tipos-reserva": {
+      "get": {
+        "tags": [
+          "reservas"
+        ],
+        "summary": "Medios de transporte y servicios soportados (extensible, QA-M1)",
+        "operationId": "tipos_api_v1_tipos_reserva_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Tipos Api V1 Tipos Reserva Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reservas": {
+      "post": {
+        "tags": [
+          "reservas"
+        ],
+        "summary": "Agregar una reserva manualmente",
+        "operationId": "crear_api_v1_reservas_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevaReserva"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservaDTO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reservas/{reserva_id}": {
+      "get": {
+        "tags": [
+          "reservas"
+        ],
+        "summary": "Consultar una reserva",
+        "operationId": "obtener_api_v1_reservas__reserva_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reserva_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reserva Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservaDTO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "reservas"
+        ],
+        "summary": "Actualizar una reserva",
+        "operationId": "actualizar_api_v1_reservas__reserva_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reserva_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reserva Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambioReserva"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservaDTO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "reservas"
+        ],
+        "summary": "Eliminar una reserva",
+        "operationId": "eliminar_api_v1_reservas__reserva_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reserva_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reserva Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/movil/resumen": {
+      "get": {
+        "tags": [
+          "movil"
+        ],
+        "summary": "Resumen del próximo tramo (primer despliegue)",
+        "operationId": "resumen_api_v1_movil_resumen_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResumenMovil"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/correo/vincular": {
+      "post": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Vincular casilla vía OAuth con alcance de solo lectura",
+        "operationId": "vincular_api_v1_correo_vincular_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VinculoCorreo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Vincular Api V1 Correo Vincular Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/correo/cuenta": {
+      "get": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Estado de la casilla vinculada (nunca expone el token)",
+        "operationId": "cuenta_api_v1_correo_cuenta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Cuenta Api V1 Correo Cuenta Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Desvincular y revocar el acceso",
+        "operationId": "desvincular_api_v1_correo_cuenta_delete",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/correo/sondear": {
+      "post": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Sondear la casilla ahora (encola los correos autorizados)",
+        "operationId": "sondear_api_v1_correo_sondear_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Sondear Api V1 Correo Sondear Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/correo/whitelist": {
+      "get": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Remitentes autorizados",
+        "operationId": "listar_whitelist_api_v1_correo_whitelist_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Whitelist Api V1 Correo Whitelist Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Agregar remitente o dominio",
+        "operationId": "agregar_whitelist_api_v1_correo_whitelist_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntradaWhitelist"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "title": "Response Agregar Whitelist Api V1 Correo Whitelist Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/correo/whitelist/{remitente}": {
+      "delete": {
+        "tags": [
+          "correo"
+        ],
+        "summary": "Quitar remitente o dominio",
+        "operationId": "quitar_whitelist_api_v1_correo_whitelist__remitente__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "remitente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Remitente"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "Response Quitar Whitelist Api V1 Correo Whitelist  Remitente  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/proveedores/{proveedor}/webhook": {
+      "post": {
+        "tags": [
+          "proveedores"
+        ],
+        "summary": "Notificación de cambio de un proveedor (formato propietario)",
+        "operationId": "webhook_api_v1_proveedores__proveedor__webhook_post",
+        "parameters": [
+          {
+            "name": "proveedor",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proveedor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Carga"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Webhook Api V1 Proveedores  Proveedor  Webhook Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/proveedores": {
+      "get": {
+        "tags": [
+          "proveedores"
+        ],
+        "summary": "Proveedores integrados y su disponibilidad",
+        "operationId": "proveedores_api_v1_proveedores_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Proveedores Api V1 Proveedores Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/agencias": {
+      "get": {
+        "tags": [
+          "soporte"
+        ],
+        "summary": "Agencias de viaje integradas",
+        "operationId": "agencias_api_v1_agencias_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Agencias Api V1 Agencias Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/viajes/{viaje_id}/soporte": {
+      "post": {
+        "tags": [
+          "soporte"
+        ],
+        "summary": "Enviar el contexto del viaje al soporte de la agencia preferida",
+        "operationId": "solicitar_soporte_api_v1_viajes__viaje_id__soporte_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudSoporte"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Solicitar Soporte Api V1 Viajes  Viaje Id  Soporte Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/viajes/{viaje_id}/comparticiones": {
+      "get": {
+        "tags": [
+          "compartir"
+        ],
+        "summary": "Personas designadas (ACL del itinerario)",
+        "operationId": "listar_api_v1_viajes__viaje_id__comparticiones_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Listar Api V1 Viajes  Viaje Id  Comparticiones Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "compartir"
+        ],
+        "summary": "Designar a una persona con permiso de solo lectura",
+        "operationId": "agregar_api_v1_viajes__viaje_id__comparticiones_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comparticion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Agregar Api V1 Viajes  Viaje Id  Comparticiones Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/viajes/{viaje_id}/comparticiones/{email}": {
+      "delete": {
+        "tags": [
+          "compartir"
+        ],
+        "summary": "Quitar a una persona designada",
+        "operationId": "quitar_api_v1_viajes__viaje_id__comparticiones__email__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Quitar Api V1 Viajes  Viaje Id  Comparticiones  Email  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/viajes/{viaje_id}/publicar": {
+      "post": {
+        "tags": [
+          "compartir"
+        ],
+        "summary": "Publicar en una red social un enlace protegido al itinerario",
+        "operationId": "publicar_api_v1_viajes__viaje_id__publicar_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Publicar Api V1 Viajes  Viaje Id  Publicar Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analitica/destinos": {
+      "get": {
+        "tags": [
+          "analitica"
+        ],
+        "summary": "Tendencias de destinos",
+        "operationId": "destinos_api_v1_analitica_destinos_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Destinos Api V1 Analitica Destinos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analitica/cancelaciones": {
+      "get": {
+        "tags": [
+          "analitica"
+        ],
+        "summary": "Tasa de cancelación por proveedor",
+        "operationId": "cancelaciones_api_v1_analitica_cancelaciones_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Cancelaciones Api V1 Analitica Cancelaciones Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/analitica/estacionalidad": {
+      "get": {
+        "tags": [
+          "analitica"
+        ],
+        "summary": "Reservas por mes y tipo",
+        "operationId": "estacionalidad_api_v1_analitica_estacionalidad_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Estacionalidad Api V1 Analitica Estacionalidad Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/salud": {
+      "get": {
+        "tags": [
+          "operaciones"
+        ],
+        "summary": "Heartbeat de la región (lo consulta el Global Traffic Manager)",
+        "operationId": "salud_api_v1_salud_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Salud Api V1 Salud Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/operaciones/estado": {
+      "get": {
+        "tags": [
+          "operaciones"
+        ],
+        "summary": "Métricas de los atributos de calidad",
+        "operationId": "estado_api_v1_operaciones_estado_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Estado Api V1 Operaciones Estado Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/operaciones/notificaciones": {
+      "get": {
+        "tags": [
+          "operaciones"
+        ],
+        "summary": "Notificaciones a operaciones",
+        "operationId": "notificaciones_api_v1_operaciones_notificaciones_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Notificaciones Api V1 Operaciones Notificaciones Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/operaciones/auditoria": {
+      "get": {
+        "tags": [
+          "operaciones"
+        ],
+        "summary": "Registro de auditoría de accesos",
+        "operationId": "auditoria_api_v1_operaciones_auditoria_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recurso",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Recurso"
+            }
+          },
+          {
+            "name": "resultado",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Resultado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Auditoria Api V1 Operaciones Auditoria Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/operaciones/mensajes-muertos": {
+      "get": {
+        "tags": [
+          "operaciones"
+        ],
+        "summary": "Mensajes que agotaron reintentos",
+        "operationId": "muertos_api_v1_operaciones_mensajes_muertos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Muertos Api V1 Operaciones Mensajes Muertos Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CambioPerfil": {
+        "properties": {
+          "idioma": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idioma"
+          },
+          "zona_horaria": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Zona Horaria"
+          },
+          "moneda": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 3,
+                "minLength": 3
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Moneda"
+          },
+          "agencia_preferida": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agencia Preferida"
+          }
+        },
+        "type": "object",
+        "title": "CambioPerfil"
+      },
+      "CambioReserva": {
+        "properties": {
+          "titulo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Titulo"
+          },
+          "inicio": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inicio"
+          },
+          "fin": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fin"
+          },
+          "destino": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UbicacionDTO"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "origen": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UbicacionDTO"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "detalles": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detalles"
+          },
+          "estado": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "confirmada",
+                  "modificada",
+                  "cancelada"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado"
+          },
+          "viaje_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Viaje Id"
+          }
+        },
+        "type": "object",
+        "title": "CambioReserva"
+      },
+      "CambioViaje": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Nombre"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "title": "CambioViaje"
+      },
+      "Comparticion": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^[^@ ]+@[^@ ]+\\.[^@ ]+$",
+            "title": "Email",
+            "description": "Persona designada"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "title": "Comparticion"
+      },
+      "Credenciales": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "clave": {
+            "type": "string",
+            "title": "Clave"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "clave"
+        ],
+        "title": "Credenciales"
+      },
+      "EntradaWhitelist": {
+        "properties": {
+          "remitente": {
+            "type": "string",
+            "minLength": 3,
+            "title": "Remitente",
+            "description": "Dirección exacta o dominio (ej. aerolinea.com)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "remitente"
+        ],
+        "title": "EntradaWhitelist"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "NuevaReserva": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "proveedor": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Proveedor"
+          },
+          "codigo_confirmacion": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Codigo Confirmacion"
+          },
+          "titulo": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Titulo"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Inicio"
+          },
+          "fin": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fin"
+          },
+          "destino": {
+            "$ref": "#/components/schemas/UbicacionDTO"
+          },
+          "origen": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UbicacionDTO"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "detalles": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Detalles"
+          },
+          "viaje_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Viaje Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "proveedor",
+          "codigo_confirmacion",
+          "titulo",
+          "inicio",
+          "fin",
+          "destino"
+        ],
+        "title": "NuevaReserva"
+      },
+      "Perfil": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "rol": {
+            "type": "string",
+            "title": "Rol"
+          },
+          "idioma": {
+            "type": "string",
+            "title": "Idioma"
+          },
+          "zona_horaria": {
+            "type": "string",
+            "title": "Zona Horaria"
+          },
+          "moneda": {
+            "type": "string",
+            "title": "Moneda"
+          },
+          "agencia_preferida": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agencia Preferida"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "nombre",
+          "rol",
+          "idioma",
+          "zona_horaria",
+          "moneda"
+        ],
+        "title": "Perfil"
+      },
+      "Publicacion": {
+        "properties": {
+          "red": {
+            "type": "string",
+            "title": "Red",
+            "default": "redsocial"
+          },
+          "mensaje": {
+            "type": "string",
+            "title": "Mensaje",
+            "default": "¡Mirá mi próximo viaje!"
+          }
+        },
+        "type": "object",
+        "title": "Publicacion"
+      },
+      "ReservaDTO": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "viaje_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Viaje Id"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "proveedor": {
+            "type": "string",
+            "title": "Proveedor"
+          },
+          "codigo_confirmacion": {
+            "type": "string",
+            "title": "Codigo Confirmacion"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Inicio"
+          },
+          "fin": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fin"
+          },
+          "origen": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UbicacionDTO"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "destino": {
+            "$ref": "#/components/schemas/UbicacionDTO"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "confirmada",
+              "modificada",
+              "cancelada"
+            ],
+            "title": "Estado"
+          },
+          "detalles": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Detalles"
+          },
+          "fuente": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "correo",
+              "proveedor"
+            ],
+            "title": "Fuente"
+          },
+          "sincronizacion": {
+            "type": "string",
+            "enum": [
+              "al_dia",
+              "desactualizada"
+            ],
+            "title": "Sincronizacion"
+          },
+          "ultima_actualizacion": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ultima Actualizacion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "viaje_id",
+          "tipo",
+          "proveedor",
+          "codigo_confirmacion",
+          "titulo",
+          "inicio",
+          "fin",
+          "origen",
+          "destino",
+          "estado",
+          "detalles",
+          "fuente",
+          "sincronizacion",
+          "ultima_actualizacion"
+        ],
+        "title": "ReservaDTO"
+      },
+      "ResumenMovil": {
+        "properties": {
+          "proximo": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TramoResumido"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "viajes_activos": {
+            "type": "integer",
+            "title": "Viajes Activos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "proximo",
+          "viajes_activos"
+        ],
+        "title": "ResumenMovil",
+        "description": "Contrato ligero del primer despliegue móvil (ADR-0005, QA-R3)."
+      },
+      "Sesion": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/Perfil"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token",
+          "usuario"
+        ],
+        "title": "Sesion"
+      },
+      "SolicitudSoporte": {
+        "properties": {
+          "motivo": {
+            "type": "string",
+            "enum": [
+              "cancelacion",
+              "retraso",
+              "cambio",
+              "reembolso",
+              "otro"
+            ],
+            "title": "Motivo"
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Descripcion"
+          },
+          "reservas_afectadas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reservas Afectadas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "motivo",
+          "descripcion"
+        ],
+        "title": "SolicitudSoporte"
+      },
+      "TramoResumido": {
+        "properties": {
+          "viaje_id": {
+            "type": "string",
+            "title": "Viaje Id"
+          },
+          "viaje": {
+            "type": "string",
+            "title": "Viaje"
+          },
+          "reserva_id": {
+            "type": "string",
+            "title": "Reserva Id"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "codigo": {
+            "type": "string",
+            "title": "Codigo"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Inicio"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "sincronizacion": {
+            "type": "string",
+            "title": "Sincronizacion"
+          },
+          "destino": {
+            "type": "string",
+            "title": "Destino"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon"
+          },
+          "detalle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detalle",
+            "description": "Puerta, asiento o habitación si se conoce"
+          }
+        },
+        "type": "object",
+        "required": [
+          "viaje_id",
+          "viaje",
+          "reserva_id",
+          "tipo",
+          "titulo",
+          "codigo",
+          "inicio",
+          "estado",
+          "sincronizacion",
+          "destino",
+          "lat",
+          "lon"
+        ],
+        "title": "TramoResumido"
+      },
+      "UbicacionDTO": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "ciudad": {
+            "type": "string",
+            "title": "Ciudad",
+            "default": ""
+          },
+          "pais": {
+            "type": "string",
+            "title": "Pais",
+            "default": ""
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "title": "UbicacionDTO"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ViajeDTO": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "destino": {
+            "type": "string",
+            "title": "Destino"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Inicio"
+          },
+          "fin": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fin"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "planificado",
+              "en_curso",
+              "finalizado",
+              "archivado"
+            ],
+            "title": "Estado"
+          },
+          "es_propietario": {
+            "type": "boolean",
+            "title": "Es Propietario",
+            "default": true
+          },
+          "reservas": {
+            "items": {
+              "$ref": "#/components/schemas/ReservaDTO"
+            },
+            "type": "array",
+            "title": "Reservas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "destino",
+          "inicio",
+          "fin",
+          "estado",
+          "reservas"
+        ],
+        "title": "ViajeDTO"
+      },
+      "VinculoCorreo": {
+        "properties": {
+          "proveedor": {
+            "type": "string",
+            "title": "Proveedor",
+            "default": "gmail"
+          },
+          "direccion": {
+            "type": "string",
+            "title": "Direccion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "direccion"
+        ],
+        "title": "VinculoCorreo"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
