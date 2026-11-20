@@ -12,7 +12,7 @@ TPE de Diseño de Sistemas de Software (UNICEN). En la primera entrega se hizo e
 | Código del prototipo | [`trotamundos/`](trotamundos/) |
 | Tests por iteración y driver | [`tests/`](tests/) |
 
-Fuera de alcance por ahora: el chatbot y el sistema de recomendación (requerimientos avanzados de la 2da entrega).
+Requerimiento avanzado de la 2da entrega: se implementó la **Opción A, Sistema de Recomendación** con optimización human-in-the-loop (pestaña **Sugerencias**; código en [`trotamundos/recomendacion/`](trotamundos/recomendacion/), tests en `tests/test_iteracion5_recomendaciones.py`). El chatbot (Opción B) queda fuera de alcance.
 
 ## Requisitos
 

@@ -20,7 +20,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 
-RUTAS_NO_CRITICAS = ("/api/v1/analitica",)
+RUTAS_NO_CRITICAS = ("/api/v1/analitica", "/api/v1/recomendaciones")
 SUFIJOS_NO_CRITICOS = ("/publicar",)
 
 

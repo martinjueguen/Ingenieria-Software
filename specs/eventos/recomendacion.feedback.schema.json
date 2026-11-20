@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trotamundos/eventos/recomendacion.feedback",
+  "title": "recomendacion.feedback",
+  "description": "Decisión del viajero sobre una sugerencia (aceptar, rechazar) o ajuste explícito de parámetros. La consume el aprendizaje de preferencias (human-in-the-loop) y el almacén analítico (ADD It.5).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["usuario_id", "accion", "momento"],
+  "properties": {
+    "usuario_id": {"type": "string", "minLength": 1},
+    "accion": {"enum": ["aceptada", "rechazada", "ajuste"]},
+    "momento": {"type": "string", "format": "date-time"},
+    "recomendacion_id": {"type": "string"},
+    "motivo": {"enum": ["alojamiento", "transporte", "disrupcion"]},
+    "motivo_rechazo": {"enum": ["precio", "ubicacion", "comodidad", "horario", "otro"]},
+    "tipo": {"type": "string"},
+    "proveedor": {"type": "string"},
+    "producto": {"type": "string"},
+    "ciudad": {"type": "string"},
+    "precio": {"type": "number", "minimum": 0},
+    "caracteristicas": {"$ref": "#/$defs/vector"},
+    "promedio_grupo": {"$ref": "#/$defs/vector"},
+    "parametros": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"accion": {"enum": ["aceptada", "rechazada"]}}},
+      "then": {"required": ["recomendacion_id", "motivo", "tipo", "proveedor", "producto", "caracteristicas", "promedio_grupo"]}
+    },
+    {
+      "if": {"properties": {"accion": {"const": "ajuste"}}},
+      "then": {"required": ["parametros"]}
+    }
+  ],
+  "$defs": {
+    "vector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precio", "comodidad", "cercania", "popularidad", "afinidad"],
+      "properties": {
+        "precio": {"type": "number", "minimum": 0, "maximum": 1},
+        "comodidad": {"type": "number", "minimum": 0, "maximum": 1},
+        "cercania": {"type": "number", "minimum": 0, "maximum": 1},
+        "popularidad": {"type": "number", "minimum": 0, "maximum": 1},
+        "afinidad": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  }
+}

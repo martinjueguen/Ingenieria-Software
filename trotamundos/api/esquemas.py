@@ -186,3 +186,63 @@ class Publicacion(BaseModel):
 
 Sesion.model_rebuild()
 ResumenMovil.model_rebuild()
+
+
+# --------------------------------------------------------------------------- #
+# Sistema de Recomendación (ADD It.5)                                          #
+# --------------------------------------------------------------------------- #
+
+
+class OfertaDTO(BaseModel):
+    proveedor: str
+    tipo: str
+    titulo: str
+    inicio: datetime
+    fin: datetime
+    origen: UbicacionDTO | None
+    destino: UbicacionDTO
+    precio_usd: float
+    atributos: dict[str, Any]
+
+
+class RecomendacionDTO(BaseModel):
+    id: str
+    puntaje: float
+    caracteristicas: dict[str, float] = Field(description="Valores 0..1 de precio, comodidad, cercania, "
+                                                          "popularidad y afinidad")
+    explicacion: list[str] = Field(description="Claves i18n de las razones principales")
+    oferta: OfertaDTO
+
+    @classmethod
+    def de(cls, r: Any) -> "RecomendacionDTO":
+        o = r.oferta
+        return cls(id=r.id, puntaje=r.puntaje, caracteristicas=r.caracteristicas, explicacion=r.explicacion,
+                   oferta=OfertaDTO(proveedor=o.proveedor, tipo=o.tipo, titulo=o.titulo, inicio=o.inicio, fin=o.fin,
+                                    origen=UbicacionDTO(**o.origen.__dict__) if o.origen else None,
+                                    destino=UbicacionDTO(**o.destino.__dict__), precio_usd=o.precio,
+                                    atributos=o.atributos))
+
+
+class GrupoRecomendaciones(BaseModel):
+    grupo: str
+    viaje_id: str
+    motivo: Literal["alojamiento", "transporte", "disrupcion"]
+    descripcion: str
+    reserva_origen_id: str | None
+    sugerencias: list[RecomendacionDTO]
+
+
+class Rechazo(BaseModel):
+    motivo: Literal["precio", "ubicacion", "comodidad", "horario", "otro"] | None = None
+
+
+class ParametrosRecomendacion(BaseModel):
+    presupuesto_max: float | None = Field(default=None, gt=0, description="USD por reserva")
+    distancia_max_km: float | None = Field(default=None, gt=0, description="Alojamiento: distancia máxima al centro")
+    categoria_minima: int | None = Field(default=None, ge=1, le=5, description="Alojamiento: estrellas mínimas")
+    transporte_preferido: Literal["tren", "vuelo", "autobus"] | None = None
+
+
+class PreferenciasRecomendacion(BaseModel):
+    parametros: ParametrosRecomendacion
+    pesos: dict[str, float] = Field(description="Pesos aprendidos de las decisiones del viajero")

@@ -30,3 +30,8 @@ def cancelaciones(_: Analista, sistema: SistemaDep) -> list[dict]:
 @router.get("/analitica/estacionalidad", summary="Reservas por mes y tipo")
 def estacionalidad(_: Analista, sistema: SistemaDep) -> list[dict]:
     return sistema.almacen.estacionalidad()
+
+
+@router.get("/analitica/recomendaciones", summary="Efectividad del sistema de recomendación (tasa de aceptación)")
+def recomendaciones(_: Analista, sistema: SistemaDep) -> list[dict]:
+    return sistema.almacen.efectividad_recomendaciones()

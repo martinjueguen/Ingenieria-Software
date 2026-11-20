@@ -133,6 +133,17 @@ class TestQAD2FallaDeProveedor:
         hotel = next(x for x in _reservas(cliente, h) if x["codigo_confirmacion"] == "HP-55821")
         assert hotel["sincronizacion"] == "al_dia" and hotel["detalles"]["habitacion"] == "512"
 
+    def test_sondeo_de_proveedores_sin_fallas_con_los_datos_de_demo(self, sistema):
+        drenar(sistema)
+        assert sistema.planificador.ejecutar_ahora("sondeo-proveedores")["consultas_encoladas"] > 0
+        drenar(sistema)
+        assert sistema.bus.mensajes_muertos() == []
+        pendientes = sistema.bus.bd.consultar_uno(
+            "SELECT COUNT(*) AS n FROM mensajes WHERE cola = 'consultas-proveedores' AND estado != 'hecho'")
+        assert pendientes["n"] == 0
+        cancelada = sistema.repo_reservas.buscar_por_proveedor("hoteles-plaza", "DEMO-1")[0]
+        assert cancelada.estado == EstadoReserva.CANCELADA  # el sondeo no deshace la cancelación
+
     def test_reintentos_con_backoff_exponencial(self, sistema):
         drenar(sistema)  # vaciar los eventos de la carga inicial
         sistema.bus.backoff_base = 10.0

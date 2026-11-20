@@ -22,6 +22,7 @@ from trotamundos.api import (
     rutas_correo,
     rutas_movil,
     rutas_proveedores,
+    rutas_recomendaciones,
     rutas_reservas,
     rutas_salud,
     rutas_simulacion,
@@ -56,7 +57,8 @@ def construir_api(sistema: Sistema) -> FastAPI:
 
     v1 = APIRouter(prefix="/api/v1")
     for modulo in (rutas_auth, rutas_viajes, rutas_reservas, rutas_movil, rutas_correo, rutas_proveedores,
-                   rutas_soporte, rutas_compartir, rutas_analitica, rutas_salud, rutas_simulacion):
+                   rutas_soporte, rutas_compartir, rutas_recomendaciones, rutas_analitica, rutas_salud,
+                   rutas_simulacion):
         v1.include_router(modulo.router)
     app.include_router(v1)
 

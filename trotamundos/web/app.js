@@ -31,6 +31,7 @@ const cerrarDialogo = () => $("#dialogo").close();
 // ---------------------------------------------------------------- navegación
 const VISTAS = {
   viajes: { t: "nav.viajes", render: () => renderViajes(false) },
+  sugerencias: { t: "nav.sugerencias", render: renderSugerencias },
   compartidos: { t: "nav.compartidos", render: renderCompartidos },
   historial: { t: "nav.historial", render: () => renderViajes(true) },
   correo: { t: "nav.correo", render: renderCorreo },
@@ -235,6 +236,86 @@ async function renderCompartidos() {
   contenido().innerHTML = viajes.length ? viajes.map(v => htmlViaje(v, false)).join("") : `<p class="tarjeta">—</p>`;
 }
 
+// ---------------------------------------------------------------- sugerencias (ADD It.5, human-in-the-loop)
+const usd = n => new Intl.NumberFormat(TM.locale(), { style: "currency", currency: "USD" }).format(n);
+
+function htmlSugerencia(s) {
+  const o = s.oferta;
+  const a = o.atributos || {};
+  const datos = [
+    a.estrellas ? "★".repeat(a.estrellas) : "",
+    a.distancia_centro_km != null ? `${a.distancia_centro_km} km` : "",
+    a.duracion_min ? `${Math.floor(a.duracion_min / 60)} h ${a.duracion_min % 60} min` : "",
+    TM.esc(o.proveedor),
+  ].filter(Boolean).join(" · ");
+  const razones = s.explicacion.map(k => `<span class="chip ok">${TM.t(k)}</span>`).join(" ");
+  return `<div class="reserva">
+    <div class="icono">${ICONOS[o.tipo] || "📌"}</div>
+    <div><strong>${TM.esc(o.titulo)}</strong> <strong>${usd(o.precio_usd)}</strong><br>
+      <span class="suave">${TM.fecha(o.inicio)} → ${TM.fecha(o.fin)} · ${datos}</span><br>${razones}</div>
+    <div class="acciones fila"><button class="primario" data-aceptar="${s.id}">${TM.t("rec.aceptar")}</button>
+      <button data-rechazar="${s.id}">${TM.t("rec.rechazar")}</button></div></div>`;
+}
+
+async function renderSugerencias() {
+  const [grupos, viajes, prefs] = await Promise.all([
+    TM.api("GET", "/recomendaciones"), TM.api("GET", "/viajes"), TM.api("GET", "/recomendaciones/preferencias"),
+  ]);
+  const nombreViaje = id => (viajes.find(v => v.id === id) || {}).nombre || "";
+  const p = prefs.parametros;
+  const opt = (v, actual) => `<option value="${v}" ${v === (actual ?? "") ? "selected" : ""}>${v || "—"}</option>`;
+  const maxPeso = Math.max(...Object.values(prefs.pesos));
+  contenido().innerHTML = `
+    ${grupos.length ? grupos.map(g => `<section class="tarjeta">
+      <div class="fila espaciar"><h3 style="margin:0">${TM.esc(g.descripcion)}</h3>
+        <span class="chip ${g.motivo === "disrupcion" ? "error" : ""}">${TM.t("rec.motivo." + g.motivo)}</span></div>
+      <span class="suave">${TM.esc(nombreViaje(g.viaje_id))}</span>
+      ${g.sugerencias.map(htmlSugerencia).join("")}</section>`).join("") : `<p class="tarjeta">${TM.t("rec.vacio")}</p>`}
+    <section class="tarjeta"><h3>${TM.t("rec.ajustar")}</h3>
+      <form id="f-prefs" class="grilla">
+        <div><label>${TM.t("rec.presupuesto")}</label><input name="presupuesto_max" type="number" min="1" value="${p.presupuesto_max ?? ""}"></div>
+        <div><label>${TM.t("rec.distancia")}</label><input name="distancia_max_km" type="number" min="0.1" step="0.1" value="${p.distancia_max_km ?? ""}"></div>
+        <div><label>${TM.t("rec.categoria")}</label><select name="categoria_minima">${["", "3", "4", "5"].map(v => opt(v, p.categoria_minima?.toString())).join("")}</select></div>
+        <div><label>${TM.t("rec.transporte")}</label><select name="transporte_preferido">${["", "tren", "vuelo", "autobus"].map(v => opt(v, p.transporte_preferido)).join("")}</select></div>
+        <p><button class="primario">${TM.t("form.guardar")}</button></p></form>
+      <h4>${TM.t("rec.pesos")}</h4>
+      ${Object.entries(prefs.pesos).map(([k, v]) => `<div class="fila"><span style="width:200px">${TM.t("rec.f." + k)}</span>
+        <div class="barra" style="width:${(v / maxPeso) * 50}%"></div><span class="suave">${v.toFixed(2)}</span></div>`).join("")}
+    </section>`;
+
+  const refrescar = () => { aviso(TM.t("rec.actualizando")); setTimeout(() => ir("sugerencias"), 1500); };
+  contenido().querySelectorAll("[data-aceptar]").forEach(b => b.onclick = () => intentar(async () => {
+    b.disabled = true;
+    const r = await TM.api("POST", `/recomendaciones/${b.dataset.aceptar}/aceptar`);
+    aviso(`${TM.t("rec.aceptada")}: ${r.titulo} (${r.codigo_confirmacion})`);
+    setTimeout(() => ir("sugerencias"), 1500);
+  }));
+  contenido().querySelectorAll("[data-rechazar]").forEach(b => b.onclick = () => {
+    const motivos = ["precio", "ubicacion", "comodidad", "horario", "otro"];
+    abrirDialogo(`<h3>${TM.t("rec.rechazo.titulo")}</h3>
+      ${motivos.map(m => `<p><button style="width:100%" data-motivo="${m}">${TM.t("rec.rechazo." + m)}</button></p>`).join("")}
+      <p><button id="cancelar">${TM.t("form.cancelar")}</button></p>`, raiz => {
+      raiz.querySelector("#cancelar").onclick = cerrarDialogo;
+      raiz.querySelectorAll("[data-motivo]").forEach(m => m.onclick = () => intentar(async () => {
+        await TM.api("POST", `/recomendaciones/${b.dataset.rechazar}/rechazar`, { motivo: m.dataset.motivo });
+        cerrarDialogo(); refrescar();
+      }));
+    });
+  });
+  $("#f-prefs").onsubmit = ev => {
+    ev.preventDefault();
+    const f = Object.fromEntries(new FormData(ev.target));
+    const num = v => (v === "" ? null : Number(v));
+    intentar(async () => {
+      await TM.api("PUT", "/recomendaciones/preferencias", {
+        presupuesto_max: num(f.presupuesto_max), distancia_max_km: num(f.distancia_max_km),
+        categoria_minima: num(f.categoria_minima), transporte_preferido: f.transporte_preferido || null,
+      });
+      refrescar();
+    });
+  };
+}
+
 // ---------------------------------------------------------------- correo (US-01, US-02, QA-S2)
 async function renderCorreo() {
   const [cuenta, whitelist] = await Promise.all([TM.api("GET", "/correo/cuenta"), TM.api("GET", "/correo/whitelist")]);
@@ -300,13 +381,14 @@ function tabla(filas) {
 }
 
 async function renderAnalitica() {
-  const [d, c, e] = await Promise.all(["destinos", "cancelaciones", "estacionalidad"].map(x => TM.api("GET", "/analitica/" + x)));
+  const [d, c, e, rec] = await Promise.all(["destinos", "cancelaciones", "estacionalidad", "recomendaciones"].map(x => TM.api("GET", "/analitica/" + x)));
   const max = Math.max(1, ...d.map(x => x.reservas));
   contenido().innerHTML = `<section class="tarjeta"><h3>Tendencias de destinos</h3>
       ${d.map(x => `<div class="fila"><span style="width:160px">${TM.esc(x.ciudad_destino)} (${x.pais_destino})</span>
         <div class="barra" style="width:${(x.reservas / max) * 60}%"></div><span class="suave">${x.reservas}</span></div>`).join("")}</section>
     <section class="tarjeta"><h3>Cancelaciones por proveedor</h3>${tabla(c)}</section>
     <section class="tarjeta"><h3>Estacionalidad</h3>${tabla(e)}</section>
+    <section class="tarjeta"><h3>Efectividad de las recomendaciones</h3>${tabla(rec)}</section>
     <p class="suave">Fuente: almacén analítico OLAP (datos anonimizados), separado de la base operacional.</p>`;
 }
 

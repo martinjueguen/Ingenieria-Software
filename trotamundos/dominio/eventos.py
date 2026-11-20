@@ -12,5 +12,10 @@ PROVEEDOR_ACTUALIZACION = "proveedor.actualizacion"
 PROVEEDOR_CONSULTA = "proveedor.consulta"
 # Evento de dominio: alta/modificación/cancelación/baja de una reserva
 RESERVA_CAMBIADA = "reserva.cambiada"
+# Sistema de Recomendación (ADD It.5): decisión del viajero sobre una sugerencia (human-in-the-loop)
+RECOMENDACION_FEEDBACK = "recomendacion.feedback"
+# Pedido de recálculo de sugerencias (ajuste de parámetros, planificador o usuario)
+RECOMENDACION_SOLICITADA = "recomendacion.solicitada"
 
-TODOS = (CORREO_RECIBIDO, PROVEEDOR_ACTUALIZACION, PROVEEDOR_CONSULTA, RESERVA_CAMBIADA)
+TODOS = (CORREO_RECIBIDO, PROVEEDOR_ACTUALIZACION, PROVEEDOR_CONSULTA, RESERVA_CAMBIADA,
+         RECOMENDACION_FEEDBACK, RECOMENDACION_SOLICITADA)

@@ -11,6 +11,7 @@ from typing import Generic, TypeVar
 
 from trotamundos.integracion.puertos import (
     AdaptadorAgencia,
+    AdaptadorCatalogo,
     AdaptadorCorreo,
     AdaptadorProveedorViajes,
     AdaptadorRedSocial,
@@ -50,3 +51,5 @@ class RegistroAdaptadores:
         self.correo: _Catalogo[AdaptadorCorreo] = _Catalogo("Proveedor de correo")
         self.agencias: _Catalogo[AdaptadorAgencia] = _Catalogo("Agencia")
         self.redes: _Catalogo[AdaptadorRedSocial] = _Catalogo("Red social")
+        # Catálogos de ofertas para el Sistema de Recomendación (ADD It.5)
+        self.catalogos: _Catalogo[AdaptadorCatalogo] = _Catalogo("Catálogo de ofertas")

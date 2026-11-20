@@ -121,6 +121,11 @@ class BaseDatos:
         self._ganchos_post_commit: list[Callable[[sqlite3.Connection], None]] = []
         self._conexion.executescript(esquema)
 
+    def asegurar_esquema(self, esquema: str) -> None:
+        """Permite que un módulo cree sus propias tablas sin modificar el esquema base."""
+        with self._lock:
+            self._conexion.executescript(esquema)
+
     def al_confirmar(self, gancho: Callable[[sqlite3.Connection], None]) -> None:
         self._ganchos_post_commit.append(gancho)
 

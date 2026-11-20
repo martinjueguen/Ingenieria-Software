@@ -35,6 +35,7 @@ from trotamundos.gestion_viajes.gestor_ciclo_vida import GestorCicloVida
 from trotamundos.gestion_viajes.servicio_itinerarios import ServicioItinerarios
 from trotamundos.gestion_viajes.servicio_reservas import ServicioReservas
 from trotamundos.integracion.agencia import AdaptadorAgenciaEstandar
+from trotamundos.integracion.catalogo import AdaptadorCatalogoEstandar
 from trotamundos.integracion.correo.gmail import AdaptadorGmail
 from trotamundos.integracion.correo.servicio_escaneo import ServicioEscaneoCorreo
 from trotamundos.integracion.proveedores.aerolinea import AdaptadorAerolinea
@@ -49,7 +50,11 @@ from trotamundos.integracion.simuladores import (
     SimuladorProveedorViajes,
     SimuladorRedSocial,
 )
+from trotamundos.integracion.simuladores_catalogo import SimuladorCatalogo
 from trotamundos.integracion.sincronizador_proveedores import SincronizadorProveedores
+from trotamundos.recomendacion.estrategias import EstrategiaHibrida
+from trotamundos.recomendacion.repositorio import RepositorioRecomendaciones
+from trotamundos.recomendacion.servicio import ServicioRecomendaciones
 from trotamundos.seguridad.auditoria import RegistroAuditoria
 from trotamundos.seguridad.autenticacion import EmisorTokens
 from trotamundos.seguridad.autorizacion import ControlAccesoItinerarios
@@ -67,6 +72,7 @@ class SistemasExternos:
     correo: SimuladorCorreo = field(default_factory=lambda: SimuladorCorreo("gmail"))
     agencias: dict[str, SimuladorAgencia] = field(default_factory=dict)
     red_social: SimuladorRedSocial = field(default_factory=lambda: SimuladorRedSocial("redsocial"))
+    catalogos: dict[str, SimuladorCatalogo] = field(default_factory=dict)
 
 
 class Sistema:
@@ -129,6 +135,17 @@ class Sistema:
         self.bus.suscribir(eventos.PROVEEDOR_CONSULTA, "consultas-proveedores", self.consumidores.consulta_proveedor)
         self.bus.suscribir(eventos.RESERVA_CAMBIADA, "exportador-analitico", self.consumidores.exportar_analitica)
 
+        # ---- Sistema de Recomendación (ADD It.5) ------------------------------- #
+        self.recomendaciones = ServicioRecomendaciones(
+            RepositorioRecomendaciones(self.bd), self.repo_viajes, self.repo_reservas, self.reservas,
+            self.adaptadores, self.almacen, self.bus, self.notificaciones, EstrategiaHibrida(),
+        )
+        self.bus.suscribir(eventos.RESERVA_CAMBIADA, "recomendador", self.recomendaciones.al_cambiar_reserva)
+        self.bus.suscribir(eventos.RECOMENDACION_SOLICITADA, "recomendador-solicitudes",
+                           self.recomendaciones.al_solicitar)
+        self.bus.suscribir(eventos.RECOMENDACION_FEEDBACK, "aprendizaje-recomendaciones",
+                           self.recomendaciones.al_recibir_feedback)
+
         self.workers = GrupoWorkers(self.bus, config.workers_min, config.workers_max, config.mensajes_por_worker)
         self.planificador = Planificador()
         self.planificador.agregar("archivado-viajes", config.periodo_archivado, self.ciclo_vida.ejecutar)
@@ -136,6 +153,8 @@ class Sistema:
         self.planificador.agregar("salud-proveedores", config.periodo_salud_proveedores,
                                   self.sincronizador.verificar_salud)
         self.planificador.agregar("sondeo-proveedores", config.periodo_sondeo_proveedores, self.sincronizador.sondear)
+        self.planificador.agregar("recomendaciones-proactivas", config.periodo_recomendaciones,
+                                  self.recomendaciones.solicitar_para_todos)
 
     def _registrar_adaptadores(self) -> None:
         """Alta de proveedores. Un proveedor nuevo = una línea acá + su adaptador (QA-I1)."""
@@ -149,6 +168,12 @@ class Sistema:
             sim = SimuladorProveedorViajes(codigo)
             self.externos.proveedores[codigo] = sim
             self.adaptadores.proveedores.registrar(clase(codigo, sim))
+        # Catálogos de ofertas (ADD It.5): un proveedor con catálogo = una línea más.
+        for codigo, tipo in (("hoteles-plaza", "hotel"), ("rentacar", "auto"),
+                             ("trenes-del-sur", "tren"), ("aerolineas-sur", "vuelo")):
+            sim_catalogo = SimuladorCatalogo(tipo, self.externos.proveedores[codigo])
+            self.externos.catalogos[codigo] = sim_catalogo
+            self.adaptadores.catalogos.registrar(AdaptadorCatalogoEstandar(sim_catalogo))
         self.adaptadores.correo.registrar(AdaptadorGmail(self.externos.correo))
         for codigo, nombre in (("viajes-pampa", "Viajes Pampa"), ("global-travel", "Global Travel")):
             sim_agencia = SimuladorAgencia(codigo, nombre)

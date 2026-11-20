@@ -48,6 +48,8 @@ class Config:
     # Heartbeat a proveedores externos: detección de caída < 30 s (QA-D2)
     periodo_salud_proveedores: float = field(default_factory=lambda: float(_env("PERIODO_SALUD", "10")))
     periodo_archivado: float = field(default_factory=lambda: float(_env("PERIODO_ARCHIVADO", "3600")))
+    # Recálculo proactivo de recomendaciones (ADD It.5)
+    periodo_recomendaciones: float = field(default_factory=lambda: float(_env("PERIODO_RECOMENDACIONES", "21600")))
     # Protección de carga: solicitudes concurrentes antes de rechazar funciones no críticas (QA-E1)
     umbral_carga: int = field(default_factory=lambda: int(_env("UMBRAL_CARGA", "200")))
     # Arrancar hilos de fondo (los tests lo desactivan y ejecutan pasos a mano)

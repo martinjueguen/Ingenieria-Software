@@ -32,6 +32,18 @@ CREATE TABLE IF NOT EXISTS hechos_reservas (
 );
 CREATE INDEX IF NOT EXISTS ix_hechos_destino ON hechos_reservas(ciudad_destino);
 CREATE INDEX IF NOT EXISTS ix_hechos_proveedor ON hechos_reservas(proveedor, estado);
+CREATE TABLE IF NOT EXISTS hechos_recomendaciones (
+    evento_id TEXT PRIMARY KEY,
+    momento TEXT NOT NULL,
+    usuario_anonimo TEXT NOT NULL,
+    accion TEXT NOT NULL,
+    motivo TEXT,
+    tipo TEXT,
+    proveedor TEXT,
+    producto TEXT,
+    ciudad TEXT,
+    precio REAL
+);
 """
 
 
@@ -95,3 +107,31 @@ class AlmacenAnalitico:
     def total_hechos(self) -> int:
         fila = self.bd.consultar_uno("SELECT COUNT(*) AS n FROM hechos_reservas")
         return int(fila["n"]) if fila else 0
+
+    # ---- Feedback de recomendaciones (ADD It.5, human-in-the-loop) -------- #
+
+    def registrar_feedback(self, evento_id: str, carga: dict[str, Any]) -> None:
+        """Idempotente por `evento_id`. Solo guarda datos anonimizados."""
+        self.bd.ejecutar(
+            "INSERT OR IGNORE INTO hechos_recomendaciones VALUES (?,?,?,?,?,?,?,?,?,?)",
+            (evento_id, carga["momento"], self.anonimizar(carga["usuario_id"]), carga["accion"],
+             carga.get("motivo"), carga.get("tipo"), carga.get("proveedor"), carga.get("producto"),
+             carga.get("ciudad"), carga.get("precio")),
+        )
+
+    def aceptaciones_por_producto(self) -> dict[str, int]:
+        """Popularidad: cuántos viajeros eligieron cada producto sugerido."""
+        return {f["producto"]: f["n"] for f in self.bd.consultar(
+            """SELECT producto, COUNT(DISTINCT usuario_anonimo) AS n FROM hechos_recomendaciones
+               WHERE accion = 'aceptada' AND producto IS NOT NULL GROUP BY producto""")}
+
+    def efectividad_recomendaciones(self) -> list[dict[str, Any]]:
+        return [dict(f) for f in self.bd.consultar(
+            """SELECT motivo, tipo,
+                      SUM(CASE WHEN accion = 'aceptada' THEN 1 ELSE 0 END) AS aceptadas,
+                      SUM(CASE WHEN accion = 'rechazada' THEN 1 ELSE 0 END) AS rechazadas,
+                      ROUND(1.0 * SUM(CASE WHEN accion = 'aceptada' THEN 1 ELSE 0 END)
+                            / MAX(SUM(CASE WHEN accion IN ('aceptada','rechazada') THEN 1 ELSE 0 END), 1), 3)
+                        AS tasa_aceptacion
+               FROM hechos_recomendaciones WHERE accion != 'ajuste'
+               GROUP BY motivo, tipo ORDER BY motivo, tipo""")]

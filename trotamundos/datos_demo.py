@@ -35,8 +35,32 @@ MAD = {"iata": "MAD", "city": "Madrid", "country": "ES", "lat": 40.4983, "lon": 
 BRC = {"iata": "BRC", "city": "Bariloche", "country": "AR", "lat": -41.1512, "lon": -71.1578}
 
 
+# Reservas de otros viajeros: (ciudad, país, lat, lon, días desde hoy). Alimentan la analítica.
+OTROS_VIAJEROS = [
+    ("Roma", "IT", 41.9, 12.5, 15), ("Cusco", "PE", -13.53, -71.97, 40), ("Río de Janeiro", "BR", -22.9, -43.2, 60),
+    ("Madrid", "ES", 40.42, -3.70, 75), ("Roma", "IT", 41.9, 12.5, 90), ("Cusco", "PE", -13.53, -71.97, 120),
+]
+CANCELADAS_OTROS_VIAJEROS = {1, 4}
+
+
+def _proveedor_otro_viajero(i: int) -> str:
+    # "otro-hotel" no está integrado: esas reservas son solo manuales y no se sondean.
+    return "hoteles-plaza" if i % 2 else "otro-hotel"
+
+
 def sembrar_simuladores(s: "Sistema") -> None:
     p = s.externos.proveedores
+    # Las reservas de otros viajeros con un proveedor integrado también existen en ese
+    # proveedor, con el mismo estado: así el sondeo las reconcilia en vez de fallar.
+    for i, (ciudad, pais, lat, lon, dias) in enumerate(OTROS_VIAJEROS):
+        if _proveedor_otro_viajero(i) != "hoteles-plaza":
+            continue
+        p["hoteles-plaza"].reservas[f"DEMO-{i}"] = {
+            "confirmation_no": f"DEMO-{i}",
+            "state": "CANCELED" if i in CANCELADAS_OTROS_VIAJEROS else "BOOKED",
+            "hotel": {"name": f"Hotel en {ciudad}", "city": ciudad, "country": pais, "lat": lat, "lon": lon},
+            "check_in": _f(dias), "check_out": _f(dias + 4),
+        }
     p["aerolineas-sur"].reservas.update({
         "AS7K2P": {"pnr": "AS7K2P", "status": "SCHEDULED", "gate": "B12",
                    "flight": {"number": "AS1234", "from": EZE, "to": MAD,
@@ -124,17 +148,13 @@ def cargar_datos_demo(s: "Sistema") -> None:
     s.repo_comparticiones.agregar(madrid.id, "bruno@trotamundos.demo")
 
     # Otros viajeros (alimentan la analítica, US-07)
-    destinos = [
-        ("Roma", "IT", 41.9, 12.5, 15), ("Cusco", "PE", -13.53, -71.97, 40), ("Río de Janeiro", "BR", -22.9, -43.2, 60),
-        ("Madrid", "ES", 40.42, -3.70, 75), ("Roma", "IT", 41.9, 12.5, 90), ("Cusco", "PE", -13.53, -71.97, 120),
-    ]
-    for i, (ciudad, pais, lat, lon, dias) in enumerate(destinos):
+    for i, (ciudad, pais, lat, lon, dias) in enumerate(OTROS_VIAJEROS):
         uid = _crear_usuario(s, f"viajero{i}@trotamundos.demo", f"Viajero {i}")
         r = s.reservas.crear(Reserva(
-            id=nuevo_id(), usuario_id=uid, tipo="hotel", proveedor="hoteles-plaza" if i % 2 else "otro-hotel",
+            id=nuevo_id(), usuario_id=uid, tipo="hotel", proveedor=_proveedor_otro_viajero(i),
             codigo_confirmacion=f"DEMO-{i}", titulo=f"Hotel en {ciudad}",
             inicio=_base() + timedelta(days=dias), fin=_base() + timedelta(days=dias + 4),
             destino=Ubicacion(f"Hotel en {ciudad}", ciudad, pais, lat, lon), fuente=FuenteReserva.MANUAL,
         ))
-        if i in (1, 4):
+        if i in CANCELADAS_OTROS_VIAJEROS:
             s.reservas.actualizar(uid, r.id, {"estado": "cancelada"})

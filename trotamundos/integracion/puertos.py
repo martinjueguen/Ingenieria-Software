@@ -113,3 +113,54 @@ class AdaptadorRedSocial(ABC):
 
     @abstractmethod
     def publicar(self, token_usuario: str, mensaje: str, enlace: str) -> str: ...
+
+
+# --------------------------------------------------------------------------- #
+# Catálogo de ofertas (ADD It.5 — Sistema de Recomendación)                    #
+# --------------------------------------------------------------------------- #
+
+
+@dataclass(frozen=True)
+class Oferta:
+    """Alternativa disponible en un proveedor, en formato canónico."""
+
+    id: str
+    proveedor: str
+    tipo: str
+    titulo: str
+    inicio: datetime
+    fin: datetime
+    destino: Ubicacion
+    origen: Ubicacion | None
+    precio: float  # total, en USD
+    # Atributos normalizados que expone el proveedor: comodidad (0..1),
+    # distancia_centro_km (alojamiento), duracion_min (transporte), etc.
+    atributos: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class BusquedaOfertas:
+    tipo: str
+    ciudad_destino: str
+    desde: datetime
+    hasta: datetime
+    ciudad_origen: str | None = None
+
+
+class AdaptadorCatalogo(ABC):
+    """Consulta de disponibilidad y reserva de alternativas en un proveedor (ADD It.5).
+
+    Es un puerto separado de `AdaptadorProveedorViajes`: un proveedor puede
+    ofrecer catálogo o no, sin modificar su adaptador de reservas.
+    """
+
+    codigo: str
+    tipo_reserva: str
+
+    @abstractmethod
+    def buscar(self, busqueda: BusquedaOfertas) -> list[Oferta]:
+        """Ofertas que cumplen la búsqueda. Lanza ErrorProveedor si no responde."""
+
+    @abstractmethod
+    def reservar(self, oferta_id: str, titular: str) -> str:
+        """Reserva la oferta en el proveedor y devuelve el código de confirmación."""

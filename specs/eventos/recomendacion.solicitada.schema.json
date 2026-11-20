@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trotamundos/eventos/recomendacion.solicitada",
+  "title": "recomendacion.solicitada",
+  "description": "Pedido de recálculo de las sugerencias de un viajero (ADD It.5).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["usuario_id", "origen"],
+  "properties": {
+    "usuario_id": {"type": "string", "minLength": 1},
+    "origen": {"enum": ["usuario", "planificador"]}
+  }
+}

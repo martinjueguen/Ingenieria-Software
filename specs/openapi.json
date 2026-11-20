@@ -1232,6 +1232,259 @@
         }
       }
     },
+    "/api/v1/recomendaciones": {
+      "get": {
+        "tags": [
+          "recomendaciones"
+        ],
+        "summary": "Sugerencias pendientes agrupadas por necesidad del viaje",
+        "operationId": "listar_api_v1_recomendaciones_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viaje_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Viaje Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoRecomendaciones"
+                  },
+                  "title": "Response Listar Api V1 Recomendaciones Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recomendaciones/{rec_id}/aceptar": {
+      "post": {
+        "tags": [
+          "recomendaciones"
+        ],
+        "summary": "Aceptar una sugerencia: se reserva en el proveedor y se agrega al viaje",
+        "operationId": "aceptar_api_v1_recomendaciones__rec_id__aceptar_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rec_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Rec Id"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservaDTO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recomendaciones/{rec_id}/rechazar": {
+      "post": {
+        "tags": [
+          "recomendaciones"
+        ],
+        "summary": "Rechazar una sugerencia (opcionalmente indicando el motivo)",
+        "operationId": "rechazar_api_v1_recomendaciones__rec_id__rechazar_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rec_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Rec Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rechazo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recomendaciones/preferencias": {
+      "get": {
+        "tags": [
+          "recomendaciones"
+        ],
+        "summary": "Parámetros ajustados por el viajero y pesos aprendidos",
+        "operationId": "preferencias_api_v1_recomendaciones_preferencias_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferenciasRecomendacion"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "recomendaciones"
+        ],
+        "summary": "Ajustar parámetros (las sugerencias se recalculan en segundo plano)",
+        "operationId": "ajustar_api_v1_recomendaciones_preferencias_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParametrosRecomendacion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferenciasRecomendacion"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/recomendaciones/actualizar": {
+      "post": {
+        "tags": [
+          "recomendaciones"
+        ],
+        "summary": "Pedir que se recalculen mis sugerencias",
+        "operationId": "actualizar_api_v1_recomendaciones_actualizar_post",
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Actualizar Api V1 Recomendaciones Actualizar Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/analitica/destinos": {
       "get": {
         "tags": [
@@ -1335,6 +1588,37 @@
                   },
                   "type": "array",
                   "title": "Response Estacionalidad Api V1 Analitica Estacionalidad Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/analitica/recomendaciones": {
+      "get": {
+        "tags": [
+          "analitica"
+        ],
+        "summary": "Efectividad del sistema de recomendación (tasa de aceptación)",
+        "operationId": "recomendaciones_api_v1_analitica_recomendaciones_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Recomendaciones Api V1 Analitica Recomendaciones Get"
                 }
               }
             }
@@ -1747,6 +2031,59 @@
         ],
         "title": "EntradaWhitelist"
       },
+      "GrupoRecomendaciones": {
+        "properties": {
+          "grupo": {
+            "type": "string",
+            "title": "Grupo"
+          },
+          "viaje_id": {
+            "type": "string",
+            "title": "Viaje Id"
+          },
+          "motivo": {
+            "type": "string",
+            "enum": [
+              "alojamiento",
+              "transporte",
+              "disrupcion"
+            ],
+            "title": "Motivo"
+          },
+          "descripcion": {
+            "type": "string",
+            "title": "Descripcion"
+          },
+          "reserva_origen_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reserva Origen Id"
+          },
+          "sugerencias": {
+            "items": {
+              "$ref": "#/components/schemas/RecomendacionDTO"
+            },
+            "type": "array",
+            "title": "Sugerencias"
+          }
+        },
+        "type": "object",
+        "required": [
+          "grupo",
+          "viaje_id",
+          "motivo",
+          "descripcion",
+          "reserva_origen_id",
+          "sugerencias"
+        ],
+        "title": "GrupoRecomendaciones"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -1833,6 +2170,129 @@
         ],
         "title": "NuevaReserva"
       },
+      "OfertaDTO": {
+        "properties": {
+          "proveedor": {
+            "type": "string",
+            "title": "Proveedor"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Inicio"
+          },
+          "fin": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fin"
+          },
+          "origen": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UbicacionDTO"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "destino": {
+            "$ref": "#/components/schemas/UbicacionDTO"
+          },
+          "precio_usd": {
+            "type": "number",
+            "title": "Precio Usd"
+          },
+          "atributos": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Atributos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "proveedor",
+          "tipo",
+          "titulo",
+          "inicio",
+          "fin",
+          "origen",
+          "destino",
+          "precio_usd",
+          "atributos"
+        ],
+        "title": "OfertaDTO"
+      },
+      "ParametrosRecomendacion": {
+        "properties": {
+          "presupuesto_max": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Presupuesto Max",
+            "description": "USD por reserva"
+          },
+          "distancia_max_km": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distancia Max Km",
+            "description": "Alojamiento: distancia máxima al centro"
+          },
+          "categoria_minima": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 5.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria Minima",
+            "description": "Alojamiento: estrellas mínimas"
+          },
+          "transporte_preferido": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "tren",
+                  "vuelo",
+                  "autobus"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transporte Preferido"
+          }
+        },
+        "type": "object",
+        "title": "ParametrosRecomendacion"
+      },
       "Perfil": {
         "properties": {
           "id": {
@@ -1887,6 +2347,27 @@
         ],
         "title": "Perfil"
       },
+      "PreferenciasRecomendacion": {
+        "properties": {
+          "parametros": {
+            "$ref": "#/components/schemas/ParametrosRecomendacion"
+          },
+          "pesos": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Pesos",
+            "description": "Pesos aprendidos de las decisiones del viajero"
+          }
+        },
+        "type": "object",
+        "required": [
+          "parametros",
+          "pesos"
+        ],
+        "title": "PreferenciasRecomendacion"
+      },
       "Publicacion": {
         "properties": {
           "red": {
@@ -1902,6 +2383,70 @@
         },
         "type": "object",
         "title": "Publicacion"
+      },
+      "Rechazo": {
+        "properties": {
+          "motivo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "precio",
+                  "ubicacion",
+                  "comodidad",
+                  "horario",
+                  "otro"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo"
+          }
+        },
+        "type": "object",
+        "title": "Rechazo"
+      },
+      "RecomendacionDTO": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "puntaje": {
+            "type": "number",
+            "title": "Puntaje"
+          },
+          "caracteristicas": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Caracteristicas",
+            "description": "Valores 0..1 de precio, comodidad, cercania, popularidad y afinidad"
+          },
+          "explicacion": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Explicacion",
+            "description": "Claves i18n de las razones principales"
+          },
+          "oferta": {
+            "$ref": "#/components/schemas/OfertaDTO"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "puntaje",
+          "caracteristicas",
+          "explicacion",
+          "oferta"
+        ],
+        "title": "RecomendacionDTO"
       },
       "ReservaDTO": {
         "properties": {
