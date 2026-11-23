@@ -56,9 +56,9 @@ El conector captura la excepción, deja intacta la última información confirma
 * Simulación de proveedores caídos para pruebas: `trotamundos/integracion/simuladores.py`.
 * Indicación de "última actualización" en la interfaz: `trotamundos/web/`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 3](../add/ADD-Iteración-3.md)
-* Relacionados: [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0008](0008-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md)
+* Relacionados: [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0008](08-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md)

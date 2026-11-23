@@ -59,9 +59,9 @@ Opción elegida: "Descomponer en tres submódulos especializados", porque separa
 * Modelo de dominio (Viaje, estados, registro de tipos de transporte): `trotamundos/dominio/modelo.py`.
 * Persistencia: `trotamundos/datos/repositorios.py`. Exposición: `trotamundos/api/rutas_viajes.py`, `trotamundos/api/rutas_reservas.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 2](../add/ADD-Iteración-2.md)
-* Relacionados: [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0004](0004-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0006](0006-archivado-automatico-mediante-proceso-programado.md), [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md)
+* Relacionados: [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0004](04-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0006](06-archivado-automatico-mediante-proceso-programado.md), [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md)

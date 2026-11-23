@@ -57,9 +57,9 @@ Opción elegida: "Autoescalado horizontal basado en métricas para la capa de AP
 * Estado fuera de los servicios (base de datos y caché): `trotamundos/datos/base_datos.py`, `trotamundos/datos/cache.py`.
 * Umbrales de escalado: `trotamundos/config.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; el escalado se simula variando la cantidad de hilos del pool. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; el escalado se simula variando la cantidad de hilos del pool. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 4](../add/ADD-Iteración-4.md)
-* Relacionados: [ADR 0008](0008-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0004](0004-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0012](0012-despliegue-multirregion-activo-pasivo-caliente-con-geodns.md)
+* Relacionados: [ADR 0008](08-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0004](04-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0012](12-despliegue-multirregion-activo-pasivo-caliente-con-geodns.md)

@@ -55,9 +55,9 @@ Opción elegida: "Endpoint de resumen ligero para móvil", porque limitar el paq
 * Vista móvil con GPS: `trotamundos/web/`.
 * Contrato: `specs/openapi.json`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 2](../add/ADD-Iteración-2.md)
-* Relacionados: [ADR 0002](0002-separar-clientes-web-movil-del-backend-detras-de-una-api.md), [ADR 0004](0004-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md)
+* Relacionados: [ADR 0002](02-separar-clientes-web-movil-del-backend-detras-de-una-api.md), [ADR 0004](04-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md)

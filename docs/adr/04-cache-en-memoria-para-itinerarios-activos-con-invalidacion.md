@@ -61,9 +61,9 @@ Se registran dos decisiones del Paso 5:
 * Invalidación tras modificaciones manuales: `trotamundos/gestion_viajes/servicio_reservas.py`; tras actualizaciones externas: `trotamundos/asincrono/consumidores.py`.
 * Persistencia subyacente: `trotamundos/datos/repositorios.py`, `trotamundos/datos/base_datos.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; la caché es un almacén en memoria del proceso. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; la caché es un almacén en memoria del proceso. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 2](../add/ADD-Iteración-2.md)
-* Relacionados: [ADR 0003](0003-descomponer-gestion-de-viajes-en-reservas-itinerarios-y-ciclo-de-vida.md), [ADR 0008](0008-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0013](0013-servicios-sin-estado-con-autoescalado-horizontal.md)
+* Relacionados: [ADR 0003](03-descomponer-gestion-de-viajes-en-reservas-itinerarios-y-ciclo-de-vida.md), [ADR 0008](08-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0013](13-servicios-sin-estado-con-autoescalado-horizontal.md)

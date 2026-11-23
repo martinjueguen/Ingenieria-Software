@@ -58,9 +58,9 @@ Flujo: la recepción (webhook o sondeo) deposita el mensaje en una cola persiste
 * Recepción de webhooks/correo: `trotamundos/api/rutas_proveedores.py`, `trotamundos/api/rutas_correo.py`.
 * Contratos de mensajes: `specs/eventos/*.schema.json`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 3](../add/ADD-Iteración-3.md)
-* Relacionados: [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0004](0004-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0010](0010-deteccion-de-excepciones-y-reintentos-con-backoff-exponencial.md), [ADR 0013](0013-servicios-sin-estado-con-autoescalado-horizontal.md)
+* Relacionados: [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0004](04-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0010](10-deteccion-de-excepciones-y-reintentos-con-backoff-exponencial.md), [ADR 0013](13-servicios-sin-estado-con-autoescalado-horizontal.md)

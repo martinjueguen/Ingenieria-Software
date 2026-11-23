@@ -53,9 +53,9 @@ Opción elegida: "Proceso programado en segundo plano", porque mantiene las cons
 * Programación periódica: `trotamundos/asincrono/planificador.py`.
 * Invalidación de la caché tras archivar: `trotamundos/datos/cache.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; el planificador corre dentro del mismo proceso. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; el planificador corre dentro del mismo proceso. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 2](../add/ADD-Iteración-2.md)
-* Relacionados: [ADR 0003](0003-descomponer-gestion-de-viajes-en-reservas-itinerarios-y-ciclo-de-vida.md), [ADR 0004](0004-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md)
+* Relacionados: [ADR 0003](03-descomponer-gestion-de-viajes-en-reservas-itinerarios-y-ciclo-de-vida.md), [ADR 0004](04-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md), [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md)

@@ -57,9 +57,9 @@ Opción elegida: "Almacenamiento temporal estándar en UTC y paquetes de localiz
 * Contrato de la API con fechas en UTC (ISO 8601): `specs/openapi.json`.
 * Configuración regional por defecto: `trotamundos/config.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 4](../add/ADD-Iteración-4.md)
-* Relacionados: [ADR 0002](0002-separar-clientes-web-movil-del-backend-detras-de-una-api.md), [ADR 0012](0012-despliegue-multirregion-activo-pasivo-caliente-con-geodns.md)
+* Relacionados: [ADR 0002](02-separar-clientes-web-movil-del-backend-detras-de-una-api.md), [ADR 0012](12-despliegue-multirregion-activo-pasivo-caliente-con-geodns.md)

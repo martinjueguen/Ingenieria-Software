@@ -58,9 +58,9 @@ Opción elegida: "Despliegue multirregión en esquema activo-pasivo caliente con
 * Endpoint de salud consultado por el heartbeat: `trotamundos/api/rutas_salud.py`.
 * Parámetros (intervalos, umbrales): `trotamundos/config.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. Cada región es un proceso independiente con su propia base SQLite; la primaria replica a la secundaria después de cada commit (RPO = 0) y la secundaria queda pasiva (sin workers ni planificador) hasta que el Global Traffic Manager la promueve con `POST /api/v1/region/promover`. En la prueba local, la conmutación tardó unos 5 s (3 heartbeats de 1 s) sin perder reservas confirmadas. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. Cada región es un proceso independiente con su propia base SQLite; la primaria replica a la secundaria después de cada commit (RPO = 0) y la secundaria queda pasiva (sin workers ni planificador) hasta que el Global Traffic Manager la promueve con `POST /api/v1/region/promover`. En la prueba local, la conmutación tardó unos 5 s (3 heartbeats de 1 s) sin perder reservas confirmadas. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 4](../add/ADD-Iteración-4.md)
-* Relacionados: [ADR 0013](0013-servicios-sin-estado-con-autoescalado-horizontal.md), [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md)
+* Relacionados: [ADR 0013](13-servicios-sin-estado-con-autoescalado-horizontal.md), [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md)

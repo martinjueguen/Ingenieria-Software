@@ -29,11 +29,11 @@ Opción elegida: "Arquitectura cliente-servidor con procesamiento asíncrono ori
 Decisiones asociadas registradas en el Paso 5 de la Iteración 1:
 
 * Incorporar un sistema de mensajería con procesamiento asíncrono (persistencia de eventos y reintentos).
-* Crear un módulo de gestión de viajes y reservas (refinado en [ADR 0003](0003-descomponer-gestion-de-viajes-en-reservas-itinerarios-y-ciclo-de-vida.md)).
-* Crear un módulo de integración con proveedores externos (refinado en [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md)).
-* Separar el procesamiento analítico de la persistencia operativa (refinado en [ADR 0014](0014-almacen-analitico-olap-segregado-con-sincronizacion-asincrona.md)).
-* Incorporar mecanismos de autenticación y autorización (refinados en [ADR 0009](0009-filtrado-por-whitelist-oauth-solo-lectura-y-tokens-cifrados.md) y [ADR 0015](0015-listas-de-control-de-acceso-por-itinerario-y-auditoria.md)).
-* Separar los clientes web y móvil del backend ([ADR 0002](0002-separar-clientes-web-movil-del-backend-detras-de-una-api.md)).
+* Crear un módulo de gestión de viajes y reservas (refinado en [ADR 0003](03-descomponer-gestion-de-viajes-en-reservas-itinerarios-y-ciclo-de-vida.md)).
+* Crear un módulo de integración con proveedores externos (refinado en [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md)).
+* Separar el procesamiento analítico de la persistencia operativa (refinado en [ADR 0014](14-almacen-analitico-olap-segregado-con-sincronizacion-asincrona.md)).
+* Incorporar mecanismos de autenticación y autorización (refinados en [ADR 0009](09-filtrado-por-whitelist-oauth-solo-lectura-y-tokens-cifrados.md) y [ADR 0015](15-listas-de-control-de-acceso-por-itinerario-y-auditoria.md)).
+* Separar los clientes web y móvil del backend ([ADR 0002](02-separar-clientes-web-movil-del-backend-detras-de-una-api.md)).
 
 ### Tácticas aplicadas
 
@@ -72,10 +72,10 @@ Decisiones asociadas registradas en el Paso 5 de la Iteración 1:
 * Capa de datos: `trotamundos/datos/base_datos.py` y `trotamundos/datos/repositorios.py`.
 * Contratos de eventos: `specs/eventos/*.schema.json`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces que permiten reemplazarla por productos reales. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces que permiten reemplazarla por productos reales. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 1](../add/ADD-Iteración-1.md)
 * [Restricciones y Concerns](../add/Restricciones-y-Concerns.md)
-* Relacionados: [ADR 0002](0002-separar-clientes-web-movil-del-backend-detras-de-una-api.md), [ADR 0008](0008-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0013](0013-servicios-sin-estado-con-autoescalado-horizontal.md)
+* Relacionados: [ADR 0002](02-separar-clientes-web-movil-del-backend-detras-de-una-api.md), [ADR 0008](08-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0013](13-servicios-sin-estado-con-autoescalado-horizontal.md)

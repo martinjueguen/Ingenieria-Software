@@ -16,7 +16,18 @@ Requerimiento avanzado de la 2da entrega: se implementó la **Opción A, Sistema
 
 ## Requisitos
 
-Python 3.12 o superior. No hace falta Docker ni servicios externos: la infraestructura (bus, caché, OLTP/OLAP, regiones) y los sistemas externos (Gmail, aerolíneas, hoteles, agencias) se simulan detrás de interfaces ([ADR 0017](docs/adr/0017-stack-tecnologico-del-prototipo.md)).
+Python 3.12 o superior. No hace falta Docker ni servicios externos: la infraestructura (bus, caché, OLTP/OLAP, regiones) y los sistemas externos (Gmail, aerolíneas, hoteles, agencias) se simulan detrás de interfaces ([ADR 0017](docs/adr/17-stack-tecnologico-del-prototipo.md)).
+
+Funciona en **Windows y Linux** (y macOS). Lo único que cambia es la ruta al Python del entorno virtual:
+
+| Sistema | Crear el entorno | Python del entorno |
+|---|---|---|
+| Windows | `python -m venv .venv` | `.venv\Scripts\python` |
+| Linux / macOS | `python3 -m venv .venv` | `.venv/bin/python` |
+
+En Debian/Ubuntu, si `venv` no está disponible: `sudo apt install python3-venv`.
+
+Windows:
 
 ```bash
 python -m venv .venv
@@ -25,6 +36,18 @@ python -m venv .venv
 ```bash
 .venv\Scripts\python -m pip install -r requirements.txt
 ```
+
+Linux / macOS:
+
+```bash
+python3 -m venv .venv
+```
+
+```bash
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+En los comandos siguientes se muestra la forma de Windows; en Linux reemplazá `.venv\Scripts\python` por `.venv/bin/python` (o activá el entorno con `source .venv/bin/activate` y usá `python`).
 
 ## Ejecutar (una región)
 

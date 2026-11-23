@@ -61,9 +61,9 @@ Opción elegida: "Whitelist previa, OAuth de solo lectura y tokens cifrados en r
 * Configuración de whitelist y vinculación de casilla: `trotamundos/api/rutas_correo.py`.
 * Almacén de tokens y listas blancas: `trotamundos/datos/repositorios.py`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 3](../add/ADD-Iteración-3.md)
-* Relacionados: [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0008](0008-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0015](0015-listas-de-control-de-acceso-por-itinerario-y-auditoria.md)
+* Relacionados: [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0008](08-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md), [ADR 0015](15-listas-de-control-de-acceso-por-itinerario-y-auditoria.md)

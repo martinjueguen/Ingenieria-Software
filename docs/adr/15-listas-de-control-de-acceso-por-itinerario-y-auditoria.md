@@ -58,9 +58,9 @@ Opción elegida: "Listas de control de acceso explícitas por itinerario en el m
 * Persistencia de la ACL y la auditoría: `trotamundos/datos/repositorios.py`.
 * Interfaz de compartición: `trotamundos/web/`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 4](../add/ADD-Iteración-4.md)
-* Relacionados: [ADR 0009](0009-filtrado-por-whitelist-oauth-solo-lectura-y-tokens-cifrados.md), [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md)
+* Relacionados: [ADR 0009](09-filtrado-por-whitelist-oauth-solo-lectura-y-tokens-cifrados.md), [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md)

@@ -55,10 +55,10 @@ Un exportador analítico asíncrono, desacoplado, toma los eventos de cambios de
 * Endpoint de consultas analíticas: `trotamundos/api/rutas_analitica.py`.
 * Contratos de eventos: `specs/eventos/*.schema.json`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; el almacén analítico es una base SQLite separada de la operativa. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces; el almacén analítico es una base SQLite separada de la operativa. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 4](../add/ADD-Iteración-4.md)
 * [ADD Iteración 1](../add/ADD-Iteración-1.md) (decisión de separar analítica y persistencia operativa)
-* Relacionados: [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0004](0004-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md)
+* Relacionados: [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0004](04-cache-en-memoria-para-itinerarios-activos-con-invalidacion.md)

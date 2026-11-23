@@ -57,9 +57,9 @@ El conector recibe la solicitud de asistencia iniciada por el usuario, empaqueta
 * Agencia simulada: `trotamundos/integracion/simuladores.py`.
 * Contrato: `specs/openapi.json`.
 
-En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](0017-stack-tecnologico-del-prototipo.md).
+En el prototipo la infraestructura (bus, caché, base de datos, regiones) corre en proceso o sobre SQLite, detrás de interfaces. La decisión de stack tecnológico está en el [ADR 0017](17-stack-tecnologico-del-prototipo.md).
 
 ## Enlaces
 
 * [ADD Iteración 3](../add/ADD-Iteración-3.md)
-* Relacionados: [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md)
+* Relacionados: [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md)

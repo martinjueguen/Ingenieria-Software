@@ -70,4 +70,4 @@ Opción elegida: "Python + FastAPI + SQLite, con infraestructura en proceso detr
 
 ## Enlaces
 
-* [ADR 0018](0018-spec-driven-contratos-openapi-y-json-schema.md), [ADR 0001](0001-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0012](0012-despliegue-multirregion-activo-pasivo-caliente-con-geodns.md)
+* [ADR 0018](18-spec-driven-contratos-openapi-y-json-schema.md), [ADR 0001](01-arquitectura-cliente-servidor-con-procesamiento-asincrono-orientado-a-eventos.md), [ADR 0012](12-despliegue-multirregion-activo-pasivo-caliente-con-geodns.md)

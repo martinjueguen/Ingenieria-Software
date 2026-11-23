@@ -59,5 +59,5 @@ Opción elegida: "Contratos versionados y verificados automáticamente":
 
 ## Enlaces
 
-* [ADR 0017](0017-stack-tecnologico-del-prototipo.md), [ADR 0007](0007-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0008](0008-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md)
+* [ADR 0017](17-stack-tecnologico-del-prototipo.md), [ADR 0007](07-adaptadores-desacoplados-con-modelo-canonico-de-reserva.md), [ADR 0008](08-colas-persistentes-y-trabajadores-concurrentes-para-ingesta.md)
 * [Trazabilidad](../trazabilidad.md)
