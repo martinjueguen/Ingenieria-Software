@@ -4,7 +4,7 @@ TPE de Diseño de Sistemas de Software (UNICEN). En la primera entrega se hizo e
 
 | Qué | Dónde |
 |---|---|
-| Proceso ADD (copia de la wiki: drivers, 4 iteraciones, diagramas) | [`docs/add/`](docs/add/Home.md) |
+| Proceso ADD (copia de la wiki: drivers, 5 iteraciones, diagramas) | [`docs/add/`](docs/add/Home.md) |
 | ADRs en formato MADR | [`docs/adr/`](docs/adr/README.md) |
 | Del ADD al código (vistas de módulos, C&C, secuencia y despliegue) | [`docs/arquitectura.md`](docs/arquitectura.md) |
 | Matriz driver → ADR → spec → código → test | [`docs/trazabilidad.md`](docs/trazabilidad.md) |
@@ -12,7 +12,7 @@ TPE de Diseño de Sistemas de Software (UNICEN). En la primera entrega se hizo e
 | Código del prototipo | [`trotamundos/`](trotamundos/) |
 | Tests por iteración y driver | [`tests/`](tests/) |
 
-Requerimiento avanzado de la 2da entrega: se implementó la **Opción A, Sistema de Recomendación** con optimización human-in-the-loop (pestaña **Sugerencias**; código en [`trotamundos/recomendacion/`](trotamundos/recomendacion/), tests en `tests/test_iteracion5_recomendaciones.py`). El chatbot (Opción B) queda fuera de alcance.
+Requerimiento avanzado de la 2da entrega: se implementó la **Opción A, Sistema de Recomendación** con optimización human-in-the-loop (pestaña **Sugerencias**). El diseño está en la [Iteración 5 del ADD](docs/add/ADD-Iteración-5.md) y en los ADRs [0019](docs/adr/19-modulo-de-recomendacion-con-precalculo-asincrono-dirigido-por-eventos.md) a [0024](docs/adr/24-privacidad-en-el-aprendizaje-de-preferencias.md); código en [`trotamundos/recomendacion/`](trotamundos/recomendacion/), tests en `tests/test_iteracion5_recomendaciones.py`. El chatbot (Opción B) queda fuera de alcance.
 
 ## Requisitos
 

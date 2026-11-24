@@ -12,6 +12,8 @@ from tests.conftest import drenar
 from trotamundos.app import crear_app
 from trotamundos.asincrono.bus_eventos import ContratoInvalido
 from trotamundos.dominio import eventos
+from trotamundos.recomendacion.estrategias import EstrategiaPuntuacion, Puntuacion
+from trotamundos.recomendacion.modelo import CARACTERISTICAS
 
 
 def _grupos(cliente, h) -> dict[str, dict]:
@@ -161,3 +163,19 @@ class TestCalidad:
     def test_solo_el_dueno_decide_sobre_sus_sugerencias(self, cliente, ana, login):
         s = _hoteles_sevilla(cliente, ana)[0]
         assert cliente.post(f"/api/v1/recomendaciones/{s['id']}/aceptar", headers=login("carla")).status_code == 404
+
+    def test_estrategia_de_puntuacion_reemplazable(self, cliente, ana, sistema):
+        """QA-M2: otro algoritmo se enchufa sin modificar el servicio ni la API (ADR 0020)."""
+
+        class MasBarataPrimero(EstrategiaPuntuacion):
+            nombre = "mas-barata-primero"
+
+            def puntuar(self, ofertas, contexto):
+                neutro = {c: 0.5 for c in CARACTERISTICAS}
+                return [Puntuacion(o, neutro, -o.precio, []) for o in sorted(ofertas, key=lambda o: o.precio)]
+
+        sistema.recomendaciones.estrategia = MasBarataPrimero()
+        cliente.post("/api/v1/recomendaciones/actualizar", headers=ana)
+        drenar(sistema)
+        precios = [s["oferta"]["precio_usd"] for s in _hoteles_sevilla(cliente, ana)]
+        assert len(precios) == 3 and precios == sorted(precios)

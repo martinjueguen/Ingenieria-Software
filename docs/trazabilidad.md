@@ -13,6 +13,7 @@ Cada driver del ADD se puede seguir hasta su verificación automática. Para cor
 | US-05 Ciclo de vida del viaje | 0003, 0006 | `GET /viajes?incluir_archivados` | `servicio_itinerarios.py`, `gestor_ciclo_vida.py`, `asincrono/planificador.py` | `TestUS05CicloDeVida` |
 | US-06 Agencia preferida | 0011 | `POST /viajes/{id}/soporte` | `integracion/agencia.py`, `api/rutas_soporte.py` | `TestUS06AgenciaPreferida` |
 | US-07 Analítica | 0014 | `GET /analitica/*`, `specs/eventos/reserva.cambiada.schema.json` | `datos/almacen_analitico.py`, `consumidores.exportar_analitica` | `test_iteracion4_infraestructura.py::TestUS07Analitica` |
+| US-08 Recomendaciones human-in-the-loop (2da entrega) | 0019, 0020, 0021, 0022 | `GET/POST/PUT /recomendaciones*`, `specs/eventos/recomendacion.feedback.schema.json`, `recomendacion.solicitada.schema.json` | `recomendacion/` (`servicio.py`, `generador.py`, `estrategias.py`), `integracion/catalogo.py`, `api/rutas_recomendaciones.py`, `web/app.js` (pestaña Sugerencias) | `test_iteracion5_recomendaciones.py` (`TestPrecalculoDeSugerencias`, `TestAceptar`, `TestHumanInTheLoop`, `TestDisrupcion`) |
 
 ## Atributos de calidad
 
@@ -31,6 +32,10 @@ Cada driver del ADD se puede seguir hasta su verificación automática. Para cor
 | QA-M1 Nuevo medio de transporte | 0 defectos en los tipos existentes, trazable | 0003, 0007, 0018 | `dominio/modelo.TIPOS_RESERVA` (tren y autobús agregados por registro) | `TestQAI1QAM1...`; toda la suite |
 | QA-U1 Interfaz móvil con GPS | ≤ 2 toques, ≤ 10 s | 0005 | `web/movil.html` (Geolocation API, distancia y ruta) | `TestQAR3ResumenMovil` (coordenadas en el contrato) |
 | QA-U2 Nueva región / idioma | 0 líneas del núcleo modificadas | 0016 | `web/i18n/*.json`, `config.py`, fechas UTC | `TestQAU2Internacionalizacion`, `test_reservas_y_viajes_usan_utc` |
+| QA-R4 Sugerencias sin penalizar la latencia | 0 cálculos en la solicitud, ≤ 800 ms, actualizadas ≤ 5 min | 0019 | consumidores `recomendador*` en `recomendacion/servicio.py`; la API solo lee | `TestPrecalculoDeSugerencias::test_la_consulta_no_calcula` |
+| QA-D3 Falla del recomendador o de un catálogo | 0 min de inactividad del panel, 0 mensajes perdidos | 0023 | `ServicioRecomendaciones._buscar`, `api/proteccion_carga.py` (`RUTAS_NO_CRITICAS`) | `TestCalidad::test_catalogo_caido_no_impide_sugerir_con_los_demas`, `test_funcion_no_critica_bajo_sobrecarga`, `TestAceptar::test_catalogo_caido_al_aceptar_responde_503` |
+| QA-M2 Nuevo algoritmo o catálogo | 0 cambios en servicio, API y contrato | 0020, 0022 | `recomendacion/estrategias.EstrategiaPuntuacion`, `puertos.AdaptadorCatalogo` | `TestCalidad::test_estrategia_de_puntuacion_reemplazable` |
+| QA-S3 Privacidad del aprendizaje | 100 % de decisiones ajenas rechazadas, 0 identificadores en OLAP | 0024 | `almacen_analitico.registrar_feedback` (anonimizado), `ServicioRecomendaciones._pendiente` | `TestCalidad::test_feedback_anonimizado_en_olap`, `test_solo_el_dueno_decide_sobre_sus_sugerencias` |
 
 ## Restricciones
 

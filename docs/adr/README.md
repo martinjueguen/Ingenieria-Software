@@ -22,6 +22,12 @@ Registro de las decisiones de arquitectura del sistema Trotamundos, en formato [
 | [0016](16-almacenamiento-en-utc-y-paquetes-de-localizacion-externos.md) | Almacenamiento en UTC y paquetes de localización externos | 4 | Aceptado | QA-U2, CON-3 |
 | [0017](17-stack-tecnologico-del-prototipo.md) | Stack tecnológico del prototipo: Python + FastAPI + SQLite, infraestructura en proceso detrás de interfaces | Prototipo | Aceptado | CRN-1, QA-M1, QA-I1 |
 | [0018](18-spec-driven-contratos-openapi-y-json-schema.md) | Desarrollo guiado por especificaciones: contrato OpenAPI y JSON Schema de eventos | Prototipo | Aceptado | QA-M1, QA-I1, QA-I2 |
+| [0019](19-modulo-de-recomendacion-con-precalculo-asincrono-dirigido-por-eventos.md) | Módulo de recomendación en la Capa 2 con precálculo asíncrono dirigido por eventos | 5 | Aceptado | US-08, QA-R4, QA-R2 |
+| [0020](20-estrategia-de-puntuacion-intercambiable-con-modelo-hibrido.md) | Estrategia de puntuación intercambiable (Strategy) con un modelo híbrido inicial | 5 | Aceptado | QA-M2, US-08 |
+| [0021](21-human-in-the-loop-con-feedback-como-evento-y-aprendizaje-online.md) | Optimización human-in-the-loop: feedback como evento y aprendizaje online de pesos | 5 | Aceptado | US-08, QA-R4 |
+| [0022](22-puerto-de-catalogo-de-ofertas-separado-con-modelo-canonico.md) | Puerto de catálogo de ofertas separado, con modelo canónico de Oferta | 5 | Aceptado | QA-M2, QA-I1, CON-1 |
+| [0023](23-recomendaciones-como-funcion-no-critica-con-degradacion-controlada.md) | Recomendaciones como función no crítica, con degradación controlada | 5 | Aceptado | QA-D3, QA-E1 |
+| [0024](24-privacidad-en-el-aprendizaje-de-preferencias.md) | Privacidad en el aprendizaje de preferencias: historial propio y agregados anonimizados | 5 | Aceptado | QA-S3, US-07 |
 
 ## Convenciones
 

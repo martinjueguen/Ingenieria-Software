@@ -26,6 +26,11 @@ flowchart TB
       EXT["Motor de extracción<br/>correo/motor_extraccion.py"]
       AGE["Conector de agencia<br/>agencia.py"]
       RS["Redes sociales<br/>redes_sociales.py"]
+      CATA["Adaptadores de catálogo<br/>catalogo.py"]
+    end
+    subgraph REC["Sistema de Recomendación · recomendacion/ (It. 5)"]
+      SREC["Servicio de Recomendaciones"]
+      ESTR["Estrategia de puntuación"]
     end
     subgraph ASY["Procesamiento asíncrono · asincrono/"]
       BUS["Bus de eventos"]
@@ -53,6 +58,12 @@ flowchart TB
   CON --> OLAP
   PLA --> CV & ESC & ADP
   SEG --> AUD
+  API --> SREC
+  BUS -->|reserva.cambiada · recomendacion.*| SREC
+  SREC --> ESTR
+  SREC --> CATA
+  SREC -->|recomendacion.feedback| BUS
+  SREC --> REPO & OLAP
 ```
 
 | Elemento del ADD | Iteración | Código |
@@ -80,6 +91,14 @@ flowchart TB
 | Base de datos operacional (OLTP) | 1, 4 | `trotamundos/datos/base_datos.py` |
 | Almacén de tokens y listas blancas | 3 | tablas `cuentas_correo` y `whitelist` (`datos/base_datos.py`) |
 | Almacén de datos analítico (OLAP) | 4 | `trotamundos/datos/almacen_analitico.py` |
+| API de recomendaciones (ruta no crítica) | 5 | `trotamundos/api/rutas_recomendaciones.py`, `api/proteccion_carga.py` |
+| Servicio de Recomendaciones | 5 | `trotamundos/recomendacion/servicio.py` |
+| Detector de necesidades del viaje | 5 | `trotamundos/recomendacion/generador.py` |
+| Estrategia de puntuación (Strategy, híbrida) y aprendizaje de pesos | 5 | `trotamundos/recomendacion/estrategias.py`, `modelo.py` |
+| Adaptadores de catálogo (`Oferta` canónica) | 5 | `trotamundos/integracion/puertos.py` (`AdaptadorCatalogo`), `catalogo.py`, `simuladores_catalogo.py` |
+| Sugerencias y preferencias por viajero | 5 | `trotamundos/recomendacion/repositorio.py` (tablas en la OLTP) |
+| Hechos de feedback anonimizados | 5 | `trotamundos/datos/almacen_analitico.py` (`hechos_recomendaciones`) |
+| Pestaña Sugerencias | 5 | `trotamundos/web/app.js` |
 | Sistemas externos (Gmail, aerolíneas, hoteles, autos, trenes, agencias, red social) | Contexto | `trotamundos/integracion/simuladores.py` (simulados) |
 
 ## Vista de componentes y conectores
@@ -96,6 +115,7 @@ flowchart TB
 | Pipeline ETL / Eventos analíticos | `reserva.cambiada` → `exportador-analitico` → OLAP |
 | Enrutamiento GeoDNS / Heartbeat | `infraestructura/gestor_trafico.py` → `GET /api/v1/salud` |
 | Replicación entre regiones | `datos/replicacion.py` (gancho post-commit) |
+| Eventos de recomendación (It. 5) | `reserva.cambiada` / `recomendacion.solicitada` → `recomendador*`; `recomendacion.feedback` → `aprendizaje-recomendaciones` + OLAP |
 
 ### Secuencia de ingesta de correo (ADD Iteración 3)
 
@@ -126,6 +146,32 @@ sequenceDiagram
   R->>C: invalidar_usuario()
   R->>B: publicar(reserva.cambiada)
 ```
+
+### Secuencia del ciclo human-in-the-loop (ADD Iteración 5)
+
+```mermaid
+sequenceDiagram
+  participant V as Viajero
+  participant A as API /recomendaciones
+  participant S as ServicioRecomendaciones
+  participant C as AdaptadorCatalogo
+  participant B as Bus
+  participant W as Worker (aprendizaje)
+  B->>S: reserva.cambiada → recalcular_usuario()
+  S->>C: buscar() ofertas
+  S->>S: EstrategiaHibrida.puntuar() y guardar pendientes
+  V->>A: GET /recomendaciones
+  A-->>V: sugerencias precalculadas
+  V->>A: POST /recomendaciones/{id}/rechazar {motivo: precio}
+  A->>S: rechazar()
+  S->>B: publicar(recomendacion.feedback)
+  A-->>V: 204
+  B->>W: al_recibir_feedback()
+  W->>W: actualizar_pesos() y registrar en OLAP
+  W->>S: recalcular_usuario()
+```
+
+Detalle de las vistas de esta iteración en [`docs/add/ADD-Iteración-5-Diagramas.md`](add/ADD-Iteración-5-Diagramas.md).
 
 ## Vista de despliegue (ADD Iteración 4)
 

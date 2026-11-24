@@ -13,3 +13,7 @@
 - **Resolución de Problemas:** El sistema debe integrarse con la agencia de viajes preferida del usuario para facilitar una rápida resolución de problemas.
 
 - **Analítica de Datos:** "Trotamundos" recopilará datos analíticos de los viajes (tendencias, destinos, cancelaciones) para su monetización por parte del equipo de datos, implicando la ejecución de consultas analíticas pesadas.
+
+## Requerimiento avanzado (2da entrega)
+
+- **Sistema de Recomendación (Opción A):** Incorporar un módulo que aplique técnicas de análisis sobre el historial y preferencias de los usuarios para sugerir proactivamente alternativas de alojamiento, transporte o rutas, con un esquema de optimización *human-in-the-loop* donde el usuario acepta, rechaza o ajusta parámetros para refinar continuamente el modelo. Historia de usuario y escenarios de calidad asociados (US-08, QA-R4, QA-D3, QA-M2, QA-S3): ver [`docs/add/Requerimientos-Funcionales.md`](../docs/add/Requerimientos-Funcionales.md) y [`docs/add/Atributos-de-Calidad.md`](../docs/add/Atributos-de-Calidad.md).

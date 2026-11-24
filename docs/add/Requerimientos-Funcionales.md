@@ -60,3 +60,12 @@
     * **Para:** Generar reportes comerciales monetizables sin afectar el rendimiento ni saturar las bases de datos transaccionales de los usuarios activos.
 
 ---
+
+- ## **Sistema de Recomendación (requerimiento avanzado, Opción A — 2da entrega):** 
+  Incorporar un módulo que aplique técnicas de análisis sobre el historial y preferencias de los usuarios para sugerir proactivamente alternativas de alojamiento, transporte o rutas. El diseño debe contemplar un esquema de optimización *human-in-the-loop*, donde el usuario interactúe con las sugerencias (aceptando o ajustando parámetros) para refinar continuamente el modelo de recomendación.
+  * ### **US-08:** Recomendaciones proactivas con optimización *human-in-the-loop*
+    * **Como:** Viajero con un viaje en curso o próximo.
+    * **Quiero:** Recibir sugerencias de alojamiento, transporte o rutas para lo que le falta a mi viaje (una noche sin hotel, un tramo sin cubrir, una reserva cancelada) y poder aceptarlas, rechazarlas indicando el motivo o ajustar mis parámetros (presupuesto, distancia, categoría, medio de transporte preferido).
+    * **Para:** Completar o reacomodar mi itinerario sin buscar en varias aplicaciones, con sugerencias que se adaptan a mis decisiones con el uso.
+
+---

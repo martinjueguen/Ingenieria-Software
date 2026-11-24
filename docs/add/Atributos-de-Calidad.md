@@ -156,3 +156,52 @@ Interfaz rica que aproveche capacidades nativas como el GPS en móviles, y siste
 - **Artefacto:** Interfaz de usuario, recursos de localización y despliegue regional.
 - **Respuesta:** La interfaz adapta instantáneamente todos los textos, conversiones de husos horarios locales y representación de costos en la moneda seleccionada, manteniendo la consistencia de los datos originales del proveedor.
 - **Medida:** ≤ 1 semana, 0 líneas del código del núcleo modificadas y 0 defectos introducidos.
+
+## 8. Escenarios del Sistema de Recomendación (2da entrega)
+
+Escenarios agregados al incorporar el requerimiento avanzado **US-08** (Opción A). Refinan los atributos ya definidos para el nuevo módulo y son los drivers de la [Iteración 5](ADD-Iteración-5.md).
+
+### QA-R4 · Sugerencias sin penalizar la latencia
+
+**Atributo de Calidad:** Rendimiento
+
+- **Fuente:** Viajero desde la web o la app móvil.
+- **Estímulo:** Abre la pestaña de sugerencias de su viaje, o modifica una reserva del viaje.
+- **Ambiente:** Operación normal.
+- **Artefacto:** API de recomendaciones y Servicio de Recomendaciones.
+- **Respuesta:** Devuelve las sugerencias ya calculadas sin ejecutar el algoritmo durante la solicitud; ante un cambio en el viaje, las sugerencias se recalculan en segundo plano.
+- **Medida:** Consulta de sugerencias ≤ 800 ms (igual que QA-R2), 0 cálculos en el camino de la solicitud y sugerencias actualizadas ≤ 5 minutos después del cambio (igual que QA-R1).
+
+### QA-D3 · Falla del recomendador o de un catálogo
+
+**Atributo de Calidad:** Disponibilidad
+
+- **Fuente:** Externa (catálogo de ofertas de un proveedor) o interna (sobrecarga del sistema).
+- **Estímulo:** Un catálogo no responde, o el sistema supera su umbral de carga durante un pico.
+- **Ambiente:** Operación normal o pico por disrupción masiva (QA-E1).
+- **Artefacto:** Servicio de Recomendaciones, adaptadores de catálogo y protección de carga de la API.
+- **Respuesta:** Omite el catálogo caído y sugiere con los demás; bajo sobrecarga suspende primero las funciones no críticas (recomendaciones) para preservar las críticas (panel de viajes).
+- **Medida:** 0 minutos de inactividad del panel de viajes, 0 mensajes perdidos en la cola por la falla de un catálogo, y respuesta inmediata `503 + Retry-After` en recomendaciones mientras dura la sobrecarga.
+
+### QA-M2 · Nuevo algoritmo de recomendación o nuevo catálogo
+
+**Atributo de Calidad:** Modificabilidad
+
+- **Fuente:** Equipo de datos / desarrollador.
+- **Estímulo:** Reemplazar el algoritmo de puntuación (p. ej. por un modelo entrenado) o incorporar el catálogo de un nuevo proveedor.
+- **Ambiente:** Tiempo de diseño.
+- **Artefacto:** Módulo de recomendación (estrategia de puntuación) y puertos de catálogo.
+- **Respuesta:** Se implementa una nueva estrategia o un nuevo adaptador de catálogo y se registra, sin modificar el servicio, la API ni el contrato.
+- **Medida:** ≤ 1 semana, 0 cambios en el Servicio de Recomendaciones, en la API y en `specs/openapi.json`.
+
+### QA-S3 · Privacidad del aprendizaje de preferencias
+
+**Atributo de Calidad:** Seguridad
+
+- **Fuente:** Usuario autenticado distinto del dueño, o miembro del equipo de datos.
+- **Estímulo:** Intenta decidir sobre sugerencias ajenas, o consulta los datos de efectividad de las recomendaciones.
+- **Ambiente:** Operación en línea.
+- **Artefacto:** API de recomendaciones y almacén analítico.
+- **Respuesta:** Solo el dueño puede aceptar, rechazar o ajustar sus sugerencias; el modelo usa el historial propio del viajero y agregados anonimizados de otros; el almacén analítico guarda el feedback con identificador anonimizado.
+- **Medida:** 100 % de las decisiones sobre sugerencias ajenas rechazadas y 0 identificadores de usuario en el almacén analítico.
+
